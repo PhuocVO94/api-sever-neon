@@ -9,8 +9,6 @@ import java.util.List;
 @Getter
 @Builder
 public class ResponseDTO {
-
-
     private Object content;
     private boolean hasError;
     private List<String> errors;

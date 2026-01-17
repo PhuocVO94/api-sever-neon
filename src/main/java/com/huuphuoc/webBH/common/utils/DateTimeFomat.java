@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.url;
+package com.huuphuoc.webBH.common.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

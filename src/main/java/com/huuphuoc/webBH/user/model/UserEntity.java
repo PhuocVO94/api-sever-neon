@@ -16,8 +16,9 @@ public class UserEntity {
         public final  static  String TABLE_NAME = "w_user";
         public final  static  String COLUMN_NAME = "userName";
         public final  static  String COLUMN_PASSWORD = "password";
-        public final  static  String COLUMN_PHONE_NUMBER = "phone_number";
         public final  static  String COLUMN_EMAIL = "e_mail";
+        public final  static  String COLUNM_STATUS = "status";
+        public final  static  String COLUNM_ROLES = "roles";
 
     }
 }

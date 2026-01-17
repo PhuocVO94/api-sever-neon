@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.config;
+package com.huuphuoc.webBH.config;
 
 
 import org.springframework.context.annotation.Configuration;

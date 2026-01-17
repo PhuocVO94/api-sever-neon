@@ -1,8 +1,6 @@
 package com.huuphuoc.webBH.user.dto;
 
 
-import com.huuphuoc.webBH.common.annotation.JsonEmail;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,21 +8,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class UserBodyDTO {
-
+public class UserCreateRequestDTO {
     @NotNull
     @Size( max = 30)
     @NotEmpty(message = "User name not Blank")
-    private String username;
+        private String email;
     @NotNull
-    @NotEmpty(message = "Password Not Blank")
-    @Size(min = 8, max = 16)
-    private String password;
-    @JsonEmail()
-    @Email(message = "Email incorrectly")
-    private String email;
+    @Size( max = 30)
+    @NotEmpty(message = "User name not Blank")
+        private String password;
+    @NotNull
+    @Size( max = 30)
+    @NotEmpty(message = "User name not Blank")
+        private String username;
+
+
 
 }

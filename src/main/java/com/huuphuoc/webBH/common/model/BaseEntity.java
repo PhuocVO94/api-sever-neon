@@ -1,7 +1,7 @@
 package com.huuphuoc.webBH.common.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.huuphuoc.webBH.common.url.DateTimeFomat;
+import com.huuphuoc.webBH.common.utils.DateTimeFomat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,75 +12,59 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener; // Import đúng cái này
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime; // Khuyên dùng cái này thay vì String
 import java.util.UUID;
 
-@Data  /* Dùng Để tạo Hàm Seter Getter*/
-@NoArgsConstructor/*Dùng để tạo Contructor khồng tham số*/
-@AllArgsConstructor /*Dùng để tạo All Contructot*/
-@SuperBuilder /*Dùng Để cho Các lớp con sử dụng xư*/
-@MappedSuperclass /*  Dùng để cho Các Lớp Con ánh Xạ tới db của tầng lớp   */
-@EntityListeners(AutoCloseable.class)/*Dùng để khởi tạo đối tượng*/
-
+@Data  /* Dùng để tạo Getter, Setter, toString... */
+@NoArgsConstructor /* Dùng để tạo Constructor không tham số */
+@AllArgsConstructor /* Dùng để tạo Constructor đầy đủ tham số */
+@SuperBuilder /* Dùng để cho các lớp con sử dụng Builder pattern */
+@MappedSuperclass /* Dùng để các lớp con kế thừa các cột này vào DB của chính nó */
+// SỬA 1: Dùng AuditingEntityListener để tự động điền ngày giờ, KHÔNG dùng AutoCloseable
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = columns.ID)
-    public UUID Base_UUID;
-
-
-    /*
-     * Nhămg cho mọi người biết hiện tại đang ở version bao nhiêu, và ai là người tạo ra.
-     * tạo ra vời thời gian nào.
-     * Người thay đổi lần cuối.
-     * Trong spring boot Hỗ trợ hết các Annotation Để tạo ra 1 Class format.
-     *  @Version,   @CreatedBy,  @CreatedBy, @CreatedDate,  @LastModifiedBy,  @LastModifiedDate
-     * */
+    public UUID id; // Nên đặt tên là 'id' theo chuẩn chung, tránh dùng Base_UUID
 
     @Version
     @Column(name = columns.VERSION)
-    public long version;
-    //
+    private long version; // SỬA 2: Đã xóa 'static' (Mỗi đối tượng phải có version riêng)
+
     @CreatedBy
     @Column(name = columns.CREATED_BY)
-    public String createdBy;
-
+    private String createdBy; // SỬA 2: Đã xóa 'static'
 
     @CreatedDate
     @DateTimeFormat(pattern = DateTimeFomat.DATETIME_FOMAT)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeFomat.DATETIME_FOMAT)
     @Column(name = columns.CREATED_AT)
-    public String createdAt;
+    // SỬA 2: Xóa 'static' & SỬA 3: Đổi String sang LocalDateTime (Chuẩn nhất cho ngày giờ)
+    private LocalDateTime createdAt;
 
     @LastModifiedBy
     @Column(name = columns.LASTMODIFIED_BY)
-    public String lastModifiedBy;
+    private String lastModifiedBy; // SỬA 2: Đã xóa 'static'
 
     @LastModifiedDate
-    @CreatedDate
     @DateTimeFormat(pattern = DateTimeFomat.DATETIME_FOMAT)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeFomat.DATETIME_FOMAT)
     @Column(name = columns.LASTMODIFIED_AT)
-    public String lastModifiedAt;
+    // SỬA 2: Xóa 'static' & SỬA 3: Đổi sang LocalDateTime
+    private LocalDateTime lastModifiedAt;
 
-
-    /*   Tạo ra 1 class Utility Class
-    *     Nhằm để mapping với các cộ column trong bảng.
-        Để CLass trên không mapping xuống database ta cần đánh dấu Annotation @UtilityClas
-    * Khi ta đánh dấu @Annotation trên thì Springboot nó không mapping xuống database
-
-    * */
     @UtilityClass
-    static class columns {
-        final String ID = "ID";
-        final String VERSION = "version";
-        final String CREATED_BY = "createdBy";
-        final String CREATED_AT = "createdAt";
-        final String LASTMODIFIED_BY = "lastModifiedBy";
-        final String LASTMODIFIED_AT = "lastModifiedAt";
-
+    public static class columns {
+        public static final String ID = "ID";
+        public static final String VERSION = "version";
+        public static final String CREATED_BY = "createdBy";
+        public static final String CREATED_AT = "createdAt";
+        public static final String LASTMODIFIED_BY = "lastModifiedBy";
+        public static final String LASTMODIFIED_AT = "lastModifiedAt";
     }
-
 }
