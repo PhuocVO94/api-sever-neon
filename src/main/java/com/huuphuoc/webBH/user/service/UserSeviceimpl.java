@@ -1,8 +1,5 @@
 package com.huuphuoc.webBH.user.service;
-
-
-import com.huuphuoc.webBH.common.config.ConfigModelMapper;
-import com.huuphuoc.webBH.oder.repository.IOrderRepository;
+import com.huuphuoc.webBH.config.ModelMapperConfig;
 import com.huuphuoc.webBH.user.dto.UserDTO;
 import com.huuphuoc.webBH.user.model.User;
 import com.huuphuoc.webBH.user.repository.IUserRepository;
@@ -19,12 +16,10 @@ public final class UserSeviceimpl implements UserService {
     private final IUserRepository iUserRepository;
 
     @Autowired
-    ConfigModelMapper configModelMapper;
+    ModelMapperConfig modelMapperConfig;
 
-    public UserSeviceimpl(IUserRepository iUserRepository, IOrderRepository iOderRepository) {
-
+    public UserSeviceimpl(IUserRepository iUserRepository) {
         this.iUserRepository = iUserRepository;
-
     }
 
     @Override
@@ -36,22 +31,24 @@ public final class UserSeviceimpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         List<User> users = iUserRepository.findAll();
-        return users.stream().map(u -> configModelMapper.map(u, UserDTO.class)).toList();
+        return users.stream().map(u -> modelMapperConfig.map(u, UserDTO.class)).toList();
     }
+
 
 
     public User save(User user) {
         return this.iUserRepository.save(user);
     }
-
     @Override
     public ModelMapper modelMapper() {
-        return configModelMapper;
+        return modelMapperConfig;
     }
+
+
 
     @Override
     public User findByID(UUID uuid) {
-        return null;
+        return iUserRepository.findUserById(uuid);
     }
 
 

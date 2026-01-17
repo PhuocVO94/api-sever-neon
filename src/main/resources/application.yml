@@ -7,14 +7,14 @@ spring:
   # Config JDBC
   datasource:
     url: "jdbc:postgresql://localhost:5432/postgres"
-    username: root
+    username: postgres
     password: 1234
     driverClassName: org.postgresql.Driver
 
   #    Config JPA
   jpa:
     database: POSTGRESQL
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto:  update
     show-sql: true
     properties:
       hibernate:
@@ -28,5 +28,5 @@ spring:
   # Config Swagger
   springdoc:
     swagger-ui:
-      parth: webanhang.html
+      parth: /webanhang.html
       operation-sorter: method

@@ -1,7 +1,7 @@
 package com.huuphuoc.webBH.products.service;
 
 
-import com.huuphuoc.webBH.common.config.ConfigModelMapper;
+import com.huuphuoc.webBH.config.ModelMapperConfig;
 import com.huuphuoc.webBH.common.exception.GlobalRuntimeException;
 import com.huuphuoc.webBH.products.dto.ProductDTO;
 import com.huuphuoc.webBH.products.dto.ProductDTOForUpdate;
@@ -23,18 +23,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     IProductRepository productRepository;
-    ConfigModelMapper configModelMapper;
+    ModelMapperConfig modelMapperConfig;
 
 
     public ProductServiceImpl(IProductRepository productRepository) {
-
         this.productRepository = productRepository;
-        this.configModelMapper = new ConfigModelMapper();
+        this.modelMapperConfig = new ModelMapperConfig();
     }
 
     @Override
     public ModelMapper modelMapper() {
-        return configModelMapper;
+        return modelMapperConfig;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> findAll() {
         return productRepository.findAll().stream().map(product -> {
-            return configModelMapper.map(product, ProductDTO.class);
+            return modelMapperConfig.map(product, ProductDTO.class);
 
         }).toList();
     }
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = productRepository.findById(productDTOForUpdate.getBase_UUID());
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
-            System.out.println("Vo Huu Phuoc Designer");
+//            System.out.println("Vo Huu Phuoc Designer");
             System.out.println(product);
 
             product.setName(productDTOForUpdate.getName());

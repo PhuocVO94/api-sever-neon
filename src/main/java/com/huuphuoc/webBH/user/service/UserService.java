@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface UserService extends GenericService<User, UserDTO, UUID> {
 
+
+
 }

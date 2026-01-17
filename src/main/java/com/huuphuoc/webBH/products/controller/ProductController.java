@@ -1,7 +1,7 @@
 package com.huuphuoc.webBH.products.controller;
 
 
-import com.huuphuoc.webBH.common.url.ResponseUtility;
+import com.huuphuoc.webBH.common.utils.ResponseUtility;
 import com.huuphuoc.webBH.products.dto.ProductDTOForSave;
 import com.huuphuoc.webBH.products.dto.ProductDTOForUpdate;
 import com.huuphuoc.webBH.products.model.Product;

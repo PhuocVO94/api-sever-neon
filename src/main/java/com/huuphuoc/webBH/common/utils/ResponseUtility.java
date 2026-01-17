@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.url;
+package com.huuphuoc.webBH.common.utils;
 
 import com.huuphuoc.webBH.common.model.ResponseDTO;
 import org.springframework.http.HttpStatus;
