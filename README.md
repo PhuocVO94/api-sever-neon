@@ -1,4 +1,5 @@
-# api-sever-neon
+<<<<<<< HEAD
+
 🚀 E-Commerce API (Spring Boot)
 An E-commerce API system built for learning purposes, implementing the latest technologies in the Java Spring ecosystem. This project focuses on high security, automated development workflows (CI/CD), and scalability.
 
@@ -97,3 +98,6 @@ Deploy: Tự động Deploy lên môi trường Azure... khi pass các bước t
 JDK 17 trở lên.
 PostgreSQL Cloud DB.
 Translate thêm bản tiếng anh
+=======
+# Wbh_springboot_resfullAPI
+>>>>>>> 9269d13 (first commit)
