@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.profile.model;
+package com.huuphuoc.api.profile.model;
 
 
 import jakarta.validation.constraints.NotEmpty;

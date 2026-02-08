@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.exception;
+package com.huuphuoc.api.common.exception;
 
 public class GlobalRuntimeException extends RuntimeException {
 

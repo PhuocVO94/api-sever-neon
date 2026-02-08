@@ -1,11 +1,10 @@
-package com.huuphuoc.webBH.user.token.repository;
+package com.huuphuoc.api.user.token.repository;
 
 
-import com.huuphuoc.webBH.user.token.model.ConfirmationToken;
+import com.huuphuoc.api.user.token.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

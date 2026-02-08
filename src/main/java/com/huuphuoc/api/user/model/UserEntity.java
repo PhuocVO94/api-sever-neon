@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.user.model;
+package com.huuphuoc.api.user.model;
 
 
 import lombok.experimental.UtilityClass;

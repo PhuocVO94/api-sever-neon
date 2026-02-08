@@ -1,9 +1,9 @@
-package com.huuphuoc.webBH.products.service;
+package com.huuphuoc.api.products.service;
 
-import com.huuphuoc.webBH.common.modelservice.GenericService;
-import com.huuphuoc.webBH.products.dto.ProductDTO;
-import com.huuphuoc.webBH.products.dto.ProductDTOForUpdate;
-import com.huuphuoc.webBH.products.model.Product;
+import com.huuphuoc.api.common.modelservice.GenericService;
+import com.huuphuoc.api.products.dto.ProductDTO;
+import com.huuphuoc.api.products.dto.ProductDTOForUpdate;
+import com.huuphuoc.api.products.model.Product;
 
 import java.util.UUID;
 

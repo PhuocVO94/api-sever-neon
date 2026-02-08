@@ -1,11 +1,13 @@
-package com.huuphuoc.webBH.common.Util;
+package com.huuphuoc.api.common.Util;
 
-public class UserUtilconfig {
+public class ApiConfigUrls {
+
+    public  static  final String  URL_AUTH = "/api/auth";
+    public  static  final  String URL_USER  ="/api/users";
+    public  static  final  String URL_ADMIN ="/api/admin";
 
 
-    public final static String USER = "/api/admin/user";
-    public final static String USER_GET_ALL = "/getAll";
-    public final static String USER_SAVE = "/save";
+
 
 
 

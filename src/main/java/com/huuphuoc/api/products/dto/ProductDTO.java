@@ -1,6 +1,6 @@
-package com.huuphuoc.webBH.products.dto;
+package com.huuphuoc.api.products.dto;
 
-import com.huuphuoc.webBH.oder.model.Order;
+import com.huuphuoc.api.oder.model.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

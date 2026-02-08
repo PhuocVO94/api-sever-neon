@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.user.dto;
+package com.huuphuoc.api.user.dto;
 
 
-import com.huuphuoc.webBH.common.annotation.JsonEmail;
+import com.huuphuoc.api.common.annotation.JsonEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

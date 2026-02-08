@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.modelservice;
+package com.huuphuoc.api.common.modelservice;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,38 +1,38 @@
-package com.huuphuoc.webBH.profile.controller;
+package com.huuphuoc.api.profile.controller;
 
 
-import com.huuphuoc.webBH.common.utils.ResponseUtility;
-import com.huuphuoc.webBH.profile.model.Profile;
-import com.huuphuoc.webBH.profile.model.ProfileDTO;
-import com.huuphuoc.webBH.profile.service.ProfileService;
-import com.huuphuoc.webBH.profile.unit.ProfileEntity;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.utils.ResponseUtility;
+import com.huuphuoc.api.profile.model.ProfileDTO;
+import com.huuphuoc.api.profile.service.ProfileServiceImpl;
+import com.huuphuoc.api.profile.unit.ProfileEntity;
+import com.huuphuoc.api.security.service.CustomerUserDetails;
+import com.huuphuoc.api.user.model.User;
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
-@RequestMapping(ProfileEntity.PROFILE_TABLE)
+@RequestMapping(ApiConfigUrls.URL_USER)
+@AllArgsConstructor
 public class ProfileController {
-    @Autowired
-    ProfileService profileService;
+
+    ProfileServiceImpl profileServiceImpl;
     private ResponseUtility responseEntity;
 
-    public ProfileController(ProfileService profileService, ResponseUtility responseUtility) {
-        this.profileService = profileService;
-        this.responseEntity = responseUtility;
-    }
 
 
+    @PostMapping(ProfileEntity.PROFILE_TABLE)
+    public  Object upDateMyProfile(@AuthenticationPrincipal CustomerUserDetails curentUserDetails, @RequestBody ProfileDTO profileDTO){
 
-    @PostMapping("/save/{id}")
-    public  Object Save(
-            @PathVariable("id") UUID id,
-            @RequestBody @Valid ProfileDTO profile){
-        return responseEntity.Get(profileService.saveProfile(id,profile), HttpStatus.OK);
+        User user =  curentUserDetails.getUser();
+
+        User userRfe = new User();
+        userRfe.setId(user.getId());
+//        System.out.println("Profile Update" + userRfe.getId());
+        return responseEntity.Get(profileServiceImpl.saveProfile(userRfe,profileDTO), HttpStatus.OK);
 
     }
 

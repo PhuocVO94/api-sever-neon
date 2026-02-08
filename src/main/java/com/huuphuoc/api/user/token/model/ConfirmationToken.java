@@ -1,9 +1,9 @@
-package com.huuphuoc.webBH.user.token.model;
+package com.huuphuoc.api.user.token.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.huuphuoc.webBH.common.utils.DateTimeFomat;
-import com.huuphuoc.webBH.user.model.User;
+import com.huuphuoc.api.common.utils.DateTimeFomat;
+import com.huuphuoc.api.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

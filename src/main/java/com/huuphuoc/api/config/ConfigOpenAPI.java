@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.config;
+package com.huuphuoc.api.config;
 
 
 import io.swagger.v3.oas.models.Components;

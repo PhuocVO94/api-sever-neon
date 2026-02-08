@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.user.email.service;
+package com.huuphuoc.api.user.email.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

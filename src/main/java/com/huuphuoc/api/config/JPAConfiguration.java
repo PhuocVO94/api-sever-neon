@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.config;
+package com.huuphuoc.api.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,6 @@ public class JPAConfiguration {
     public AuditorAware AuditorProvider(){
         return new AuditorProviderIlm();
     }
-
 
 
     static  class  AuditorProviderIlm implements  AuditorAware<String> {

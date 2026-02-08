@@ -1,7 +1,10 @@
-package com.huuphuoc.webBH.security.config;
+package com.huuphuoc.api.security.config;
 
-import com.huuphuoc.webBH.common.passwordencoder.PasswordEndcoder;
-import com.huuphuoc.webBH.security.service.SecurityDetailsServiceImpl;
+import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.security.JWTAuthEntryPoint;
+import com.huuphuoc.api.security.JWTAuthFillter;
+import com.huuphuoc.api.security.JWTGennerator;
+import com.huuphuoc.api.security.service.CustomerDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -23,8 +27,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-   private final SecurityDetailsServiceImpl securityDetailsService;
    private final PasswordEndcoder passwordEndcoder;
+   private  final JWTAuthEntryPoint jwtAuthEntryPoint;
+   private  final JWTGennerator jwtGennerator;
+   private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
 
 
     @Bean
@@ -32,6 +38,7 @@ public class SecurityConfig {
         http
                 // 1. Disable CSRF cho Stateless API
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
 
                 // 2. Kích hoạt CORS (nếu frontend và backend khác domain/port)
                 .cors(Customizer.withDefaults())
@@ -53,10 +60,14 @@ public class SecurityConfig {
 
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/confirm", "/confirm/**").permitAll()
-
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/confirm", "/api/auth/confirm/**").permitAll()
+                        .requestMatchers("/api/users/**").authenticated()
                         .anyRequest().authenticated() // Còn lại phải đăng nhập
-                );
+
+                )
+                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+
 
 
         return http.build();
@@ -67,7 +78,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         // Nạp UserDetailsService vào đây để Spring biết cách tìm user
-        authProvider.setUserDetailsService(securityDetailsService);
+        authProvider.setUserDetailsService(customerDetailsServiceImpl);
         authProvider.setPasswordEncoder(passwordEndcoder.bCryptPasswordEncoder());
 
         return authProvider;
@@ -76,7 +87,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-//        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public JWTAuthFillter jwtAuthFilter() {
+        return new JWTAuthFillter(jwtGennerator, customerDetailsServiceImpl);
     }
 
 }

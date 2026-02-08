@@ -1,12 +1,12 @@
-package com.huuphuoc.webBH.user.service;
-import com.huuphuoc.webBH.common.enums.Roles;
-import com.huuphuoc.webBH.common.enums.Status;
-import com.huuphuoc.webBH.common.passwordencoder.PasswordEndcoder;
-import com.huuphuoc.webBH.common.utils.EmailValidator;
-import com.huuphuoc.webBH.user.dto.UserBodyDTO;
-import com.huuphuoc.webBH.user.dto.UserLogInDTO;
-import com.huuphuoc.webBH.user.model.User;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
+package com.huuphuoc.api.user.service;
+import com.huuphuoc.api.common.enums.Roles;
+import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.common.utils.EmailValidator;
+import com.huuphuoc.api.user.dto.UserBodyDTO;
+import com.huuphuoc.api.user.dto.UserLogInDTO;
+import com.huuphuoc.api.user.model.User;
+import com.huuphuoc.api.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,15 +48,16 @@ public class UserAuthSeviceImp implements UserAuthSevice {
     @Override
     public UserLogInDTO SignInRequest(UserLogInDTO userLogInDTO) {
 
+
         User user = iUserRepository.findUserByEmail(userLogInDTO.getEmail());
         if (user == null){
             throw new IllegalStateException("Email chưa được đăng ký");
         }
-        String passEndCod = passwordEndcoder.bCryptPasswordEncoder().encode(userLogInDTO.getPassword());
-        if (!user.getPassword().equals(passEndCod)){
+        if (!passwordEndcoder.bCryptPasswordEncoder().matches(userLogInDTO.getPassword(), user.getPassword())){
             throw  new IllegalStateException("Password Không đúng");
         }
 
+        System.out.println("Đăng nhập thành công");
 
 
         return userLogInDTO;

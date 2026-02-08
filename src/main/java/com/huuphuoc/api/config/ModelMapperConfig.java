@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.config;
+package com.huuphuoc.api.config;
 
 
 import org.modelmapper.ModelMapper;

@@ -1,19 +1,18 @@
-package com.huuphuoc.webBH.user.controller;
+package com.huuphuoc.api.user.controller;
 
 
-import com.huuphuoc.webBH.common.utils.ResponseUtility;
-import com.huuphuoc.webBH.user.service.ConfirmTokenForUserService;
+import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.utils.ResponseUtility;
+import com.huuphuoc.api.user.service.ConfirmTokenForUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(ApiConfigUrls.URL_AUTH)
 public class ConfirmTokenForUserController {
-
 
     private  final ResponseUtility responseUtility;
     private  final ConfirmTokenForUserService confirmTokenForUserService;

@@ -1,6 +1,6 @@
-package com.huuphuoc.webBH.user.token.service;
+package com.huuphuoc.api.user.token.service;
 
-import com.huuphuoc.webBH.user.token.model.ConfirmationToken;
+import com.huuphuoc.api.user.token.model.ConfirmationToken;
 
 public interface TokenService {
 

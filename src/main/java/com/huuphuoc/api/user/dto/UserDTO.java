@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.user.dto;
+package com.huuphuoc.api.user.dto;
 
 
 import lombok.AllArgsConstructor;

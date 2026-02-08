@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.enums;
+package com.huuphuoc.api.common.enums;
 
 public enum Roles {
     ADMIN,

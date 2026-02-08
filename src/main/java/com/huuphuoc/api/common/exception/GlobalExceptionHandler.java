@@ -1,8 +1,8 @@
-package com.huuphuoc.webBH.common.exception;
+package com.huuphuoc.api.common.exception;
 
 
-import com.huuphuoc.webBH.common.model.ResponseDTO;
-import com.huuphuoc.webBH.common.utils.ResponseUtility;
+import com.huuphuoc.api.common.model.ResponseDTO;
+import com.huuphuoc.api.common.utils.ResponseUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

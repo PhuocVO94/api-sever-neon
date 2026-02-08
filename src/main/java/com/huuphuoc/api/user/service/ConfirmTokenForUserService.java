@@ -1,13 +1,13 @@
-package com.huuphuoc.webBH.user.service;
+package com.huuphuoc.api.user.service;
 
 
-import com.huuphuoc.webBH.common.enums.Status;
-import com.huuphuoc.webBH.profile.model.Profile;
-import com.huuphuoc.webBH.profile.repository.IProfileRepository;
-import com.huuphuoc.webBH.user.model.User;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
-import com.huuphuoc.webBH.user.token.model.ConfirmationToken;
-import com.huuphuoc.webBH.user.token.repository.TokenRepository;
+import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.profile.model.Profile;
+import com.huuphuoc.api.profile.repository.IProfileRepository;
+import com.huuphuoc.api.user.model.User;
+import com.huuphuoc.api.user.repository.IUserRepository;
+import com.huuphuoc.api.user.token.model.ConfirmationToken;
+import com.huuphuoc.api.user.token.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,11 +50,6 @@ public class ConfirmTokenForUserService {
         confirmationToken.setComfirmAt(confirmationToken.getToken());
 
       User userSave =  iUserRepository.save(user);
-
-        Profile profile = new Profile();
-        profile.setUser(userSave);
-        iProfileRepository.save(profile);
-
       tokenRepository.save(confirmationToken);
         if (userSave.getStatus() == Status.ACTIVE  && userSave.isBlock() == true){
             return  true;

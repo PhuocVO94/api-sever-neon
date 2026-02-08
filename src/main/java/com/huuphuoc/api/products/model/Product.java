@@ -1,8 +1,8 @@
-package com.huuphuoc.webBH.products.model;
+package com.huuphuoc.api.products.model;
 
 
-import com.huuphuoc.webBH.common.model.BaseEntity;
-import com.huuphuoc.webBH.oder.model.Order;
+import com.huuphuoc.api.common.model.BaseEntity;
+import com.huuphuoc.api.oder.model.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

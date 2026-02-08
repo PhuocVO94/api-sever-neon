@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.oder.model;
+package com.huuphuoc.api.oder.model;
 
 
 import lombok.experimental.UtilityClass;
