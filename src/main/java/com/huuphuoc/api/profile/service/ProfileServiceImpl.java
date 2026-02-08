@@ -1,35 +1,35 @@
-package com.huuphuoc.webBH.profile.service;
+package com.huuphuoc.api.profile.service;
 
-import com.huuphuoc.webBH.config.ModelMapperConfig;
-import com.huuphuoc.webBH.profile.model.Profile;
-import com.huuphuoc.webBH.profile.model.ProfileDTO;
-import com.huuphuoc.webBH.profile.repository.IProfileRepository;
-import com.huuphuoc.webBH.user.model.User;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
-import org.modelmapper.ModelMapper;
+import com.huuphuoc.api.config.ModelMapperConfig;
+import com.huuphuoc.api.profile.model.Profile;
+import com.huuphuoc.api.profile.model.ProfileDTO;
+import com.huuphuoc.api.profile.repository.IProfileRepository;
+import com.huuphuoc.api.user.model.User;
+import com.huuphuoc.api.user.repository.IUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Component
+
 public class ProfileServiceImpl  implements ProfileService{
 
-    @Autowired
+
     IProfileRepository iprofileRepository;
-    ModelMapperConfig modelMapperConfig;
     IUserRepository iUserRepository;
+    ModelMapperConfig modelMapperConfig;
 
-    public ProfileServiceImpl(IProfileRepository iprofileRepository, ModelMapperConfig modelMapperConfig, IUserRepository iUserRepository) {
+    public ProfileServiceImpl(IProfileRepository iprofileRepository, IUserRepository iUserRepository, ModelMapperConfig modelMapperConfig) {
         this.iprofileRepository = iprofileRepository;
-        this.modelMapperConfig = modelMapperConfig;
         this.iUserRepository = iUserRepository;
+        this.modelMapperConfig = modelMapperConfig;
     }
-
 
     @Override
     public List<ProfileDTO> findAll() {
@@ -37,28 +37,30 @@ public class ProfileServiceImpl  implements ProfileService{
     }
 
     @Override
-    public Profile saveProfile(UUID id, ProfileDTO dto) {
-        User user = iUserRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User không tồn tại với ID: " + id));
-        Profile profile = iprofileRepository.findById(id).orElse(null);
-        if (profile == null){
-            profile = new Profile();
-            profile.setUser(user);
-            profile.setFullName(dto.getFullName());
-            profile.setPhone(dto.getPhone());
-            profile.setAddress(dto.getAddress());
-            profile.setAvatar(dto.getAvatar());
+    public ProfileDTO saveProfile( User user, ProfileDTO profileDTO) {
 
-            iprofileRepository.save(profile);
-        }else {
-            System.out.println("Đã cập nhập đầy đủ rồi->");
-        }
-
-        return profile;
+        User userR = iUserRepository.getReferenceById(user.getId());
+        Profile profile = new Profile();
+        profile.setFullName(profileDTO.getFullName());
+        profile.setPhone(profileDTO.getPhone());
+        profile.setAddress(profileDTO.getAvatar());
+        profile.setAvatar(profileDTO.getAvatar());
+        profile.setUser(userR);
+        System.out.println("Check Profile trong Save Profile" + profile.getUser().getId());
+        iprofileRepository.save(profile);
+        return profileDTO;
     }
 
     @Override
     public ProfileDTO findById(UUID id) {
+        Optional <Profile> profiles = iprofileRepository.findById(id);
+
+        if (profiles.isEmpty()){
+            throw  new IllegalStateException("Không tìm thấy profile");
+        }
+
+        System.out.println("Luồng đang đúng");
+
         return null;
     }
 }

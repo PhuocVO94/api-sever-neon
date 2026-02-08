@@ -6,15 +6,15 @@ spring:
 
   # Config JDBC
   datasource:
-    url: "jdbc:postgresql://localhost:5432/postgres"
-    username: postgres
-    password: 1234
+    url: "jdbc:postgresql://ep-flat-bird-a8we88wk-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
+    username: neondb_owner
+    password: npg_6bSNFG2QKdhZ
     driverClassName: org.postgresql.Driver
 
   #    Config JPA
   jpa:
     database: POSTGRESQL
-    hibernate.ddl-auto:  update
+    hibernate.ddl-auto:  create-drop
     show-sql: true
     properties:
       hibernate:
@@ -30,3 +30,22 @@ spring:
     swagger-ui:
       parth: /webanhang.html
       operation-sorter: method
+
+  # Config Mail
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: vohuuphuoc1102@gmail.com  # Thay email của bạn vào đây
+    password: wmxs eoix mnyd kqfz   # Thay App Password 16 ký tự vào đây
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000 # (Tùy chọn) Timeout sau 5s nếu mạng lag
+          timeout: 5000
+          writetimeout: 5000

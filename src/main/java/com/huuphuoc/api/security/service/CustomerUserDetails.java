@@ -1,9 +1,11 @@
 package com.huuphuoc.api.security.service;
 
 import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
 import com.huuphuoc.api.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +16,9 @@ import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomerUserDetails implements UserDetails {
     private  User user;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -38,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return user.isBlock();
     }
 
     @Override
@@ -54,6 +57,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
 
-        return  user.getStatus() == Status.ACTIVE;
+       return user.getStatus() == Status.ACTIVE;
     }
 }

@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.user.repository;
+package com.huuphuoc.api.user.repository;
 
 
-import com.huuphuoc.webBH.user.model.User;
+import com.huuphuoc.api.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;

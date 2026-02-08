@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.profile.repository;
+package com.huuphuoc.api.profile.repository;
 
 
-import com.huuphuoc.webBH.profile.model.Profile;
+import com.huuphuoc.api.profile.model.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

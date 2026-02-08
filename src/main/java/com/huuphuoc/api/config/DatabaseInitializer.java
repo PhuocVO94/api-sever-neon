@@ -1,10 +1,10 @@
-package com.huuphuoc.webBH.config;
+package com.huuphuoc.api.config;
 
-import com.huuphuoc.webBH.common.enums.Roles;
-import com.huuphuoc.webBH.common.enums.Status;
-import com.huuphuoc.webBH.common.passwordencoder.PasswordEndcoder;
-import com.huuphuoc.webBH.user.model.User;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
+import com.huuphuoc.api.common.enums.Roles;
+import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.user.model.User;
+import com.huuphuoc.api.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

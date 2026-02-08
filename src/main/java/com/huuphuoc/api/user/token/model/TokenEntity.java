@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.user.token.model;
+package com.huuphuoc.api.user.token.model;
 
 public class TokenEntity {
     public  static  final String ID_TOKEN ="Id";

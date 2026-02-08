@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.common.model;
+package com.huuphuoc.api.common.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.huuphuoc.webBH.common.utils.DateTimeFomat;
+import com.huuphuoc.api.common.utils.DateTimeFomat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

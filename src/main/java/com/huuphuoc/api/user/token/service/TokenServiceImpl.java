@@ -1,8 +1,8 @@
-package com.huuphuoc.webBH.user.token.service;
+package com.huuphuoc.api.user.token.service;
 
 
-import com.huuphuoc.webBH.user.token.model.ConfirmationToken;
-import com.huuphuoc.webBH.user.token.repository.TokenRepository;
+import com.huuphuoc.api.user.token.model.ConfirmationToken;
+import com.huuphuoc.api.user.token.repository.TokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

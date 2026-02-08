@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.products.dto;
+package com.huuphuoc.api.products.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

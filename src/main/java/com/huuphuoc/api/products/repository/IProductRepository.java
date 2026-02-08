@@ -1,6 +1,6 @@
-package com.huuphuoc.webBH.products.repository;
+package com.huuphuoc.api.products.repository;
 
-import com.huuphuoc.webBH.products.model.Product;
+import com.huuphuoc.api.products.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

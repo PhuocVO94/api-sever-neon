@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.user.service;
+package com.huuphuoc.api.user.service;
 
-import com.huuphuoc.webBH.user.dto.UserBodyDTO;
-import com.huuphuoc.webBH.user.dto.UserLogInDTO;
+import com.huuphuoc.api.user.dto.UserBodyDTO;
+import com.huuphuoc.api.user.dto.UserLogInDTO;
 
 public interface UserAuthSevice {
    UserBodyDTO RegistrationRequest(UserBodyDTO userBodyDTO);

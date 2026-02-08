@@ -1,6 +1,6 @@
-package com.huuphuoc.webBH.common.utils;
+package com.huuphuoc.api.common.utils;
 
-import com.huuphuoc.webBH.common.model.ResponseDTO;
+import com.huuphuoc.api.common.model.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

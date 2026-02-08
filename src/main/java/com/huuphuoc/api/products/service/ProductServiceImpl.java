@@ -1,12 +1,12 @@
-package com.huuphuoc.webBH.products.service;
+package com.huuphuoc.api.products.service;
 
 
-import com.huuphuoc.webBH.config.ModelMapperConfig;
-import com.huuphuoc.webBH.common.exception.GlobalRuntimeException;
-import com.huuphuoc.webBH.products.dto.ProductDTO;
-import com.huuphuoc.webBH.products.dto.ProductDTOForUpdate;
-import com.huuphuoc.webBH.products.model.Product;
-import com.huuphuoc.webBH.products.repository.IProductRepository;
+import com.huuphuoc.api.config.ModelMapperConfig;
+import com.huuphuoc.api.common.exception.GlobalRuntimeException;
+import com.huuphuoc.api.products.dto.ProductDTO;
+import com.huuphuoc.api.products.dto.ProductDTOForUpdate;
+import com.huuphuoc.api.products.model.Product;
+import com.huuphuoc.api.products.repository.IProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

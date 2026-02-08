@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.utils;
+package com.huuphuoc.api.common.utils;
 
 import org.springframework.stereotype.Service;
 

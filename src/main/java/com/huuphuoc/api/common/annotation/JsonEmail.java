@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.annotation;
+package com.huuphuoc.api.common.annotation;
 
 
 import jakarta.validation.Constraint;

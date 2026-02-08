@@ -1,7 +1,7 @@
-package com.huuphuoc.webBH.common.annotation;
+package com.huuphuoc.api.common.annotation;
 
-import com.huuphuoc.webBH.user.model.User;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
+import com.huuphuoc.api.user.model.User;
+import com.huuphuoc.api.user.repository.IUserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

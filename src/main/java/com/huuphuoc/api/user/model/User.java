@@ -1,14 +1,13 @@
-package com.huuphuoc.webBH.user.model;
+package com.huuphuoc.api.user.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.huuphuoc.webBH.common.enums.Roles;
-import com.huuphuoc.webBH.common.model.BaseEntity;
-import com.huuphuoc.webBH.oder.model.Order;
+import com.huuphuoc.api.common.enums.Roles;
+import com.huuphuoc.api.common.model.BaseEntity;
+import com.huuphuoc.api.oder.model.Order;
 //import com.huuphuoc.webBH.user.enums;
-import com.huuphuoc.webBH.common.enums.Status;
-import com.huuphuoc.webBH.profile.model.Profile;
-import com.huuphuoc.webBH.user.token.model.ConfirmationToken;
+import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.user.token.model.ConfirmationToken;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +17,7 @@ import java.util.*;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Table(name = UserEntity.user.TABLE_NAME)
@@ -71,6 +70,10 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
+
+    public User() {
+
+    }
 
     public User(String username, String password) {
         this.username = username;

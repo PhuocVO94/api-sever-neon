@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.model;
+package com.huuphuoc.api.common.model;
 
 import lombok.Builder;
 import lombok.Getter;

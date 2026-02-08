@@ -1,6 +1,6 @@
-package com.huuphuoc.webBH.oder.controller;
+package com.huuphuoc.api.oder.controller;
 
-import com.huuphuoc.webBH.common.utils.ResponseUtility;
+import com.huuphuoc.api.common.utils.ResponseUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.common.passwordencoder;
+package com.huuphuoc.api.common.passwordencoder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

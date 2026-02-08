@@ -1,12 +1,12 @@
-package com.huuphuoc.webBH.products.controller;
+package com.huuphuoc.api.products.controller;
 
 
-import com.huuphuoc.webBH.common.utils.ResponseUtility;
-import com.huuphuoc.webBH.products.dto.ProductDTOForSave;
-import com.huuphuoc.webBH.products.dto.ProductDTOForUpdate;
-import com.huuphuoc.webBH.products.model.Product;
-import com.huuphuoc.webBH.products.service.ProductService;
-import com.huuphuoc.webBH.products.util.ProductUtilConfig;
+import com.huuphuoc.api.common.utils.ResponseUtility;
+import com.huuphuoc.api.products.dto.ProductDTOForSave;
+import com.huuphuoc.api.products.dto.ProductDTOForUpdate;
+import com.huuphuoc.api.products.model.Product;
+import com.huuphuoc.api.products.service.ProductService;
+import com.huuphuoc.api.products.util.ProductUtilConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

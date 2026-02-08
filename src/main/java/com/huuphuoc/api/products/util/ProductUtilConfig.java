@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.products.util;
+package com.huuphuoc.api.products.util;
 
 public class ProductUtilConfig {
 

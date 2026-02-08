@@ -1,8 +1,8 @@
-package com.huuphuoc.webBH.oder.service;
+package com.huuphuoc.api.oder.service;
 
 
-import com.huuphuoc.webBH.oder.repository.IOrderRepository;
-import com.huuphuoc.webBH.user.repository.IUserRepository;
+import com.huuphuoc.api.oder.repository.IOrderRepository;
+import com.huuphuoc.api.user.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

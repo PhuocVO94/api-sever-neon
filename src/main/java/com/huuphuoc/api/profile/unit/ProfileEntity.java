@@ -1,4 +1,4 @@
-package com.huuphuoc.webBH.profile.unit;
+package com.huuphuoc.api.profile.unit;
 
 public class ProfileEntity {
     public  static  final  String PROFILE_TABLE ="profile";

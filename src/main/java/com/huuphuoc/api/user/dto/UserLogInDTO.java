@@ -1,9 +1,6 @@
-package com.huuphuoc.webBH.user.dto;
+package com.huuphuoc.api.user.dto;
 
 
-import com.huuphuoc.webBH.user.model.UserEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
