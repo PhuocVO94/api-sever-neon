@@ -1,10 +1,12 @@
 package com.huuphuoc.api.security;
 
+import com.huuphuoc.api.security.utils.JWTinfor;
 import com.huuphuoc.api.security.utils.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,8 +22,7 @@ public class JWTGennerator {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expriDate)
-                // Use HMAC for simple shared secret signing
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_Secret)
+                .signWith(SignatureAlgorithm.ES512,SecurityConstants.JWT_Secret)
                 .compact();
         return token;
 
@@ -44,7 +45,20 @@ public class JWTGennerator {
 
             return true;
         } catch (Exception e) {
-            return false;
+            throw new AuthenticationException("JWT was expired of incorrect ") {
+            };
         }
+    }
+
+    public JWTinfor pareToken(String token){
+
+
+        Claims claimstoken = Jwts.parser().parseClaimsJws(token).getBody();
+
+        return JWTinfor.builder()
+                .jwtID(claimstoken.getId())
+                .issuedAt(claimstoken.getIssuedAt())
+                .expireTime(claimstoken.getExpiration())
+                .build();
     }
 }

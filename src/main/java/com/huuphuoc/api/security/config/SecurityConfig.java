@@ -27,10 +27,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-   private final PasswordEndcoder passwordEndcoder;
-   private  final JWTAuthEntryPoint jwtAuthEntryPoint;
-   private  final JWTGennerator jwtGennerator;
-   private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
+    private final PasswordEndcoder passwordEndcoder;
+    private  final JWTAuthEntryPoint jwtAuthEntryPoint;
+    private  final JWTGennerator jwtGennerator;
+    private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
 
 
     @Bean

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService{
 
-    private final JavaMailSender mailSender;
+    private  JavaMailSender mailSender;
     private final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
     @Override
     @Async

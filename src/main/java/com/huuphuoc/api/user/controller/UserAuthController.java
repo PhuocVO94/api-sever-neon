@@ -2,6 +2,7 @@ package com.huuphuoc.api.user.controller;
 
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
 import com.huuphuoc.api.common.utils.ResponseUtility;
+import com.huuphuoc.api.redis.repository.RedisRepository;
 import com.huuphuoc.api.security.JWTAuthDTO;
 import com.huuphuoc.api.security.JWTGennerator;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
@@ -27,6 +28,8 @@ public class UserAuthController {
     private final UserAuthSeviceImp userAuthSeviceImp;
     private final ResponseUtility responseUtility;
     private  final JWTGennerator jwtGennerator;
+    private  final RedisRepository redisRepository;
+
 
     @PostMapping(UserApiConfigUrls.URL_Register)
     public Object SavedRequest(@RequestBody @Valid UserBodyDTO userBodyDTO) {
@@ -50,6 +53,11 @@ public class UserAuthController {
         } catch (BadCredentialsException ex) {
             return responseUtility.Error(new IllegalStateException("Email hoặc mật khẩu không đúng."), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+
+    @PostMapping(UserApiConfigUrls.URL_Logout)
+    public void Logout(@RequestHeader String token){
 
     }
 

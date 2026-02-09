@@ -44,23 +44,5 @@ public class UserAuthSeviceImp implements UserAuthSevice {
         createTokenAndSendMailForUserService.CreateTokenForUser(userSave);
         return userBodyDTO;
     }
-
-    @Override
-    public UserLogInDTO SignInRequest(UserLogInDTO userLogInDTO) {
-
-
-        User user = iUserRepository.findUserByEmail(userLogInDTO.getEmail());
-        if (user == null){
-            throw new IllegalStateException("Email chưa được đăng ký");
-        }
-        if (!passwordEndcoder.bCryptPasswordEncoder().matches(userLogInDTO.getPassword(), user.getPassword())){
-            throw  new IllegalStateException("Password Không đúng");
-        }
-
-        System.out.println("Đăng nhập thành công");
-
-
-        return userLogInDTO;
-    }
-
+    
 }
