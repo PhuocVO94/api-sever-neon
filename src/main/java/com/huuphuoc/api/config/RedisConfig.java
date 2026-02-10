@@ -11,7 +11,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import java.time.Duration;
 
 @Configuration
-public class LettuceConfig {
+public class RedisConfig {
     private  final  static  String HOST_NAME = "redis-13344.c56.east-us.azure.cloud.redislabs.com";
      private  final  static String  PASS_WORD = "1oWRt98kmkeo2cO1aI5NOAnClYKrZwaY";
      private  final  static  int POST = 13344;

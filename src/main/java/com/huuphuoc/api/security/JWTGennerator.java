@@ -1,18 +1,28 @@
 package com.huuphuoc.api.security;
 
+import com.huuphuoc.api.redis.model.TokenBlacklist;
+import com.huuphuoc.api.redis.repository.RedisRepository;
 import com.huuphuoc.api.security.utils.JWTinfor;
 import com.huuphuoc.api.security.utils.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+
 import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
+@AllArgsConstructor
 public class JWTGennerator {
+
+    private  final RedisRepository redisRepository;
+
 
     public  String Gennerate(Authentication authentication){
         String username = authentication.getName();
@@ -22,7 +32,8 @@ public class JWTGennerator {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expriDate)
-                .signWith(SignatureAlgorithm.ES512,SecurityConstants.JWT_Secret)
+                .setId(UUID.randomUUID().toString())
+                .signWith(SignatureAlgorithm.HS256,SecurityConstants.JWT_Secret)
                 .compact();
         return token;
 
@@ -41,7 +52,12 @@ public class JWTGennerator {
     public  boolean validateToken(String token){
 
         try {
-            Jwts.parser().setSigningKey(SecurityConstants.JWT_Secret).parseClaimsJws(token);
+          Claims claims =  Jwts.parser().setSigningKey(SecurityConstants.JWT_Secret).parseClaimsJws(token).getBody();
+
+            Optional<TokenBlacklist> tokenBlacklist = redisRepository.findById(claims.getId());
+            if (tokenBlacklist.isPresent()){
+                throw new RuntimeException("Token invalid");
+            }
 
             return true;
         } catch (Exception e) {
@@ -53,7 +69,7 @@ public class JWTGennerator {
     public JWTinfor pareToken(String token){
 
 
-        Claims claimstoken = Jwts.parser().parseClaimsJws(token).getBody();
+        Claims claimstoken = Jwts.parser().setSigningKey(SecurityConstants.JWT_Secret).parseClaimsJws(token).getBody();
 
         return JWTinfor.builder()
                 .jwtID(claimstoken.getId())

@@ -15,26 +15,31 @@ import java.util.Date;
 @Service
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class RedisService {
 
     private   RedisRepository redisRepository;
-    private   TokenBlacklist tokenBlacklist;
-    private JWTGennerator jwtGennerator;
+
+    private final JWTGennerator jwtGennerator;
+//    private   TokenBlacklist tokenBlacklist;
 
 
-    public void  LogoutService(String token){
+    public Object  LogoutService(String token){
+
         JWTinfor jwTinfor =  jwtGennerator.pareToken(token);
-        String jwtID = jwTinfor.getJwtID();
-        Date issureTime = jwTinfor.getIssuedAt();
-        Date expiredTime = jwTinfor.getExpireTime();
-        if (expiredTime.before(new Date())){
-            return;
+        try {
+            String jwtID = jwTinfor.getJwtID();
+            Date issureTime = jwTinfor.getIssuedAt();
+            Date expiredTime = jwTinfor.getExpireTime();
+            if (expiredTime.before(new Date())){
+            return null;
+            }
+            TokenBlacklist tokenBlacklist = TokenBlacklist.builder().jwtID(jwtID.toString()).expiredTime(expiredTime.getTime() - issureTime.getTime()).build();
+            redisRepository.save(tokenBlacklist);
+            return "Log out thành công";
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        TokenBlacklist tokenBlacklist = TokenBlacklist.builder().jwtID(jwtID.toString()).expiredTime(expiredTime.getTime() - issureTime.getTime()).build();
-        redisRepository.save(tokenBlacklist);
-
 
     }
 

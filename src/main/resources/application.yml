@@ -6,9 +6,9 @@ spring:
 
   # Config JDBC
   datasource:
-    url: "jdbc:postgresql://localhost:5432/postgres"
-    username: postgres
-    password: 1234
+    url: "jdbc:postgresql://ep-flat-bird-a8we88wk-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
+    username: neondb_owner
+    password: npg_6bSNFG2QKdhZ
     driverClassName: org.postgresql.Driver
 
   #    Config JPA
@@ -31,9 +31,6 @@ spring:
       parth: /webanhang.html
       operation-sorter: method
 
-
-
-  spring:
     mail:
       host: smtp.gmail.com
       port: 587
@@ -51,4 +48,3 @@ spring:
             connectiontimeout: 5000 # (Tùy chọn) Timeout sau 5s nếu mạng lag
             timeout: 5000
             writetimeout: 5000
-

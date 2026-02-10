@@ -3,6 +3,7 @@ package com.huuphuoc.api.user.controller;
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
 import com.huuphuoc.api.common.utils.ResponseUtility;
 import com.huuphuoc.api.redis.repository.RedisRepository;
+import com.huuphuoc.api.redis.service.RedisService;
 import com.huuphuoc.api.security.JWTAuthDTO;
 import com.huuphuoc.api.security.JWTGennerator;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
@@ -27,8 +28,10 @@ public class UserAuthController {
     private  final AuthenticationManager authenticationManager;
     private final UserAuthSeviceImp userAuthSeviceImp;
     private final ResponseUtility responseUtility;
-    private  final JWTGennerator jwtGennerator;
-    private  final RedisRepository redisRepository;
+    private final JWTGennerator jwtGennerator;
+    private  final RedisService redisService;
+
+
 
 
     @PostMapping(UserApiConfigUrls.URL_Register)
@@ -46,6 +49,7 @@ public class UserAuthController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String JWTToken = jwtGennerator.Gennerate(authentication);
+
             return responseUtility.Get(new JWTAuthDTO(JWTToken), HttpStatus.OK);
         } catch (DisabledException ex) {
 
@@ -57,7 +61,9 @@ public class UserAuthController {
 
 
     @PostMapping(UserApiConfigUrls.URL_Logout)
-    public void Logout(@RequestHeader String token){
+    public Object Logout(@RequestHeader String token){
+
+        return responseUtility.Get(redisService.LogoutService(token),HttpStatus.OK);
 
     }
 
