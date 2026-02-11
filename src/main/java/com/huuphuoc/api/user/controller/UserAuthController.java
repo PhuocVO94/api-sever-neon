@@ -48,9 +48,11 @@ public class UserAuthController {
                     new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(), userLogInDTO.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String JWTToken = jwtGennerator.Gennerate(authentication);
+            String accessToken = jwtGennerator.Gennerate(authentication);
+            String refeshToken = jwtGennerator.RefreshGennerate(authentication);
 
-            return responseUtility.Get(new JWTAuthDTO(JWTToken), HttpStatus.OK);
+
+            return responseUtility.Get(new JWTAuthDTO(accessToken, refeshToken), HttpStatus.OK);
         } catch (DisabledException ex) {
 
             return responseUtility.Error(new IllegalStateException("Tài khoản chưa được kích hoạt. Vui lòng xác nhận email trước khi đăng nhập."), HttpStatus.FORBIDDEN);

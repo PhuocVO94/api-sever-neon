@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 public class JWTAuthDTO {
     private  String accessToken;
-    private  String TokenType;
+    private  String refeshToken;
 
-    public JWTAuthDTO(String accessToken) {
+    public JWTAuthDTO(String accessToken, String refeshToken) {
         this.accessToken = accessToken;
+        this.refeshToken = refeshToken;
     }
 }

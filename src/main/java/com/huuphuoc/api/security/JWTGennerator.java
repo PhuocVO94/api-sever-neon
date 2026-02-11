@@ -4,15 +4,14 @@ import com.huuphuoc.api.redis.model.TokenBlacklist;
 import com.huuphuoc.api.redis.repository.RedisRepository;
 import com.huuphuoc.api.security.utils.JWTinfor;
 import com.huuphuoc.api.security.utils.SecurityConstants;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +37,25 @@ public class JWTGennerator {
         return token;
 
     }
+
+
+
+    public  String RefreshGennerate(Authentication authentication){
+
+        String username = authentication.getName();
+        Date currentDate = new Date();
+        Date expriDate = Date.from(currentDate.toInstant().plus(10, ChronoUnit.DAYS ));
+
+        return Jwts.builder().setId(UUID.randomUUID().toString())
+                .setSubject(username)
+                .setIssuedAt(currentDate)
+                .setExpiration(expriDate)
+                .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_Secret)
+                .compact();
+
+    }
+
+
 
     public  String getUsernameFromJWT (String token){
 
