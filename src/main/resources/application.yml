@@ -48,3 +48,5 @@ spring:
             connectiontimeout: 5000 # (Tùy chọn) Timeout sau 5s nếu mạng lag
             timeout: 5000
             writetimeout: 5000
+
+

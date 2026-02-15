@@ -18,7 +18,6 @@ public class TokenBlacklist {
 
     @Id
     private String jwtID;
-
     @TimeToLive(unit = TimeUnit.MINUTES)
     private  Long expiredTime;
 

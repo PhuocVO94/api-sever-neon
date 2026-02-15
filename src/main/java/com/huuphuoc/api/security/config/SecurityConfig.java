@@ -2,9 +2,10 @@ package com.huuphuoc.api.security.config;
 
 import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
 import com.huuphuoc.api.security.JWTAuthEntryPoint;
-import com.huuphuoc.api.security.JWTAuthFillter;
-import com.huuphuoc.api.security.JWTGennerator;
+import com.huuphuoc.api.security.JWTAuthFilter;
+import com.huuphuoc.api.security.JWTGenerator;
 import com.huuphuoc.api.security.service.CustomerDetailsServiceImpl;
+import com.huuphuoc.api.security.utils.JWTencodeConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +30,9 @@ public class SecurityConfig {
 
     private final PasswordEndcoder passwordEndcoder;
     private  final JWTAuthEntryPoint jwtAuthEntryPoint;
-    private  final JWTGennerator jwtGennerator;
+    private  final JWTGenerator jwtGenerator;
     private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
+    private  final JWTencodeConfig jwTencodeConfig;
 
 
     @Bean
@@ -65,9 +67,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/**").authenticated()
                         .anyRequest().authenticated() // Còn lại phải đăng nhập
 
-                )
-                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-
+                );
+        http.addFilterBefore(jwtAuthFilter(),UsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();
@@ -90,8 +91,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JWTAuthFillter jwtAuthFilter() {
-        return new JWTAuthFillter(jwtGennerator, customerDetailsServiceImpl);
+    public JWTAuthFilter jwtAuthFilter() {
+        return new JWTAuthFilter(jwtGenerator, customerDetailsServiceImpl);
     }
 
 }

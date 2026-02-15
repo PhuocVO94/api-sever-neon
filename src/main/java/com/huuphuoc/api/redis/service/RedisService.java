@@ -2,30 +2,31 @@ package com.huuphuoc.api.redis.service;
 
 import com.huuphuoc.api.redis.model.TokenBlacklist;
 import com.huuphuoc.api.redis.repository.RedisRepository;
-import com.huuphuoc.api.security.JWTGennerator;
+import com.huuphuoc.api.security.JWTGenerator;
 import com.huuphuoc.api.security.utils.JWTinfor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.Date;
 
 
 @Service
-@Builder
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RedisService {
 
-    private   RedisRepository redisRepository;
+    private final RedisRepository redisRepository;
 
-    private final JWTGennerator jwtGennerator;
-//    private   TokenBlacklist tokenBlacklist;
+    private final JWTGenerator jwtGenerator;
+    private   TokenBlacklist tokenBlacklist;
 
 
-    public Object  LogoutService(String token){
+    public Object  LogoutService(String token) throws ParseException {
 
-        JWTinfor jwTinfor =  jwtGennerator.pareToken(token);
+        JWTinfor jwTinfor =  jwtGenerator.pareToken(token);
+        System.out.println("Pare JWT correctly" + jwTinfor.getJwtID());
         try {
             String jwtID = jwTinfor.getJwtID();
             Date issureTime = jwTinfor.getIssuedAt();
@@ -33,7 +34,7 @@ public class RedisService {
             if (expiredTime.before(new Date())){
             return null;
             }
-            TokenBlacklist tokenBlacklist = TokenBlacklist.builder().jwtID(jwtID.toString()).expiredTime(expiredTime.getTime() - issureTime.getTime()).build();
+            tokenBlacklist = TokenBlacklist.builder().jwtID(jwtID.toString()).expiredTime(expiredTime.getTime() - issureTime.getTime()).build();
             redisRepository.save(tokenBlacklist);
             return "Log out thành công";
 
