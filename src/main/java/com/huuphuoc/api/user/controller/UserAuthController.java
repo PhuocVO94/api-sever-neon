@@ -6,6 +6,7 @@ import com.huuphuoc.api.redis.service.RedisService;
 import com.huuphuoc.api.redis.service.ResfeshTokenService;
 import com.huuphuoc.api.security.JWTAuthDTO;
 import com.huuphuoc.api.security.JWTGenerator;
+import com.huuphuoc.api.user.dto.TokenRefreshRequest;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
 import com.huuphuoc.api.user.dto.UserLogInDTO;
 import com.huuphuoc.api.user.service.UserAuthSeviceImp;
@@ -18,10 +19,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ApiConfigUrls.URL_AUTH)
@@ -51,8 +55,8 @@ public class UserAuthController {
                     new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(), userLogInDTO.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String accessToken = jwtGenerator.Gennerate(authentication);
-            String resfeshToken =  resfeshTokenService.createRefeshToken(authentication);
+            String accessToken = jwtGenerator.Gennerate(userLogInDTO.getEmail());
+            String resfeshToken =  resfeshTokenService.createRefreshToken(authentication);
 
 
             return responseUtility.Get(new JWTAuthDTO(accessToken, resfeshToken), HttpStatus.OK);
@@ -67,10 +71,21 @@ public class UserAuthController {
 
     @PostMapping(UserApiConfigUrls.URL_Logout)
     public Object Logout(@RequestHeader String token) throws ParseException {
-
         return responseUtility.Get(redisService.LogoutService(token),HttpStatus.OK);
-
     }
 
+    @PostMapping(UserApiConfigUrls.URL_ReseshToken)
+    public  Object Refresh(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
+        boolean valid = resfeshTokenService.validateRefreshToken(tokenRefreshRequest.getEmail(), tokenRefreshRequest.getResfeshToken());
+        if (valid) {
+            String newAccessToken = jwtGenerator.Gennerate(tokenRefreshRequest.getEmail());
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("NewAccessToken", newAccessToken);
+            tokens.put("Refresh", tokenRefreshRequest.getResfeshToken());
+            return responseUtility.Get(tokens, HttpStatus.OK);
+
+        }
+        return responseUtility.Get("HttpStatus.UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+    }
 
 }

@@ -30,8 +30,6 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
 
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            System.out.println("ssaxsds"  +requestHeader.toString());
-
             token = requestHeader.substring(7);
             try {
                 username = jwtGenerator.getUsernameFromJWT(token);

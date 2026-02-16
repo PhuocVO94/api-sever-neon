@@ -4,6 +4,15 @@ spring:
 
 
 
+  data:
+    redis:
+      host: "redis-17551.c238.us-central1-2.gce.cloud.redislabs.com"
+      port: 17551
+      username: default
+      password: TJubwZNfixw8GSmOsHY6zLAxXGtM26da
+
+
+
   # Config JDBC
   datasource:
     url: "jdbc:postgresql://ep-flat-bird-a8we88wk-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
