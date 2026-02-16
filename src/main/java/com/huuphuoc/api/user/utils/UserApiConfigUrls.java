@@ -6,5 +6,6 @@ public class UserApiConfigUrls {
     public  static  final  String URL_Register ="/Register";
     public  static  final  String URL_Login ="/login";
     public  static  final  String URL_Logout ="/logout";
+    public static  final String URL_ReseshToken = "/resfesh";
 
 }

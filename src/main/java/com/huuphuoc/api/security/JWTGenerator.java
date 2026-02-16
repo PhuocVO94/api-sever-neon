@@ -34,9 +34,8 @@ public class JWTGenerator {
 
 //    Hàm tạo token
 
-    public  String Gennerate(Authentication authentication){
-        String username = authentication.getName();
-        String roles = authentication.getAuthorities().toString();
+    public  String Gennerate(String email){
+        String username = email;
         Date currentDate = new Date();
         Date expriDate = new Date(currentDate.getTime() + SecurityConstants.JWT_Expiration);
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);

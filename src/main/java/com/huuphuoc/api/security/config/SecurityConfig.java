@@ -63,7 +63,7 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/confirm", "/api/auth/confirm/**").permitAll()
+                        .requestMatchers("/api/auth/confirm", "/api/auth/confirm/**","/api/auth/resfesh").permitAll()
                         .requestMatchers("/api/users/**").authenticated()
                         .anyRequest().authenticated() // Còn lại phải đăng nhập
 
