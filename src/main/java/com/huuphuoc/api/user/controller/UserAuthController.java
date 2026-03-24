@@ -1,6 +1,7 @@
 package com.huuphuoc.api.user.controller;
 
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
 import com.huuphuoc.api.common.utils.ResponseUtility;
 import com.huuphuoc.api.redis.service.RedisService;
 import com.huuphuoc.api.redis.service.RefreshTokenService;
@@ -9,6 +10,7 @@ import com.huuphuoc.api.security.JWTGenerator;
 import com.huuphuoc.api.user.dto.TokenRefreshRequest;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
 import com.huuphuoc.api.user.dto.UserLogInDTO;
+import com.huuphuoc.api.user.repository.IUserRepository;
 import com.huuphuoc.api.user.service.UserAuthSeviceImp;
 import com.huuphuoc.api.user.utils.UserApiConfigUrls;
 import jakarta.validation.Valid;
@@ -37,6 +39,8 @@ public class UserAuthController {
     private final JWTGenerator jwtGenerator;
     private  final RedisService redisService;
     private  final RefreshTokenService refreshTokenService;
+    private final PasswordEndcoder passwordEndcoder;
+
 
 
 
@@ -50,10 +54,19 @@ public class UserAuthController {
 
     @PostMapping(UserApiConfigUrls.URL_Login)
     public Object Login(@RequestBody UserLogInDTO userLogInDTO) {
+        System.out.println("Check Pass word " + passwordEndcoder.bCryptPasswordEncoder().encode(userLogInDTO.getPassword()));
+
+
+
+
+
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(), userLogInDTO.getPassword())
+                    new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(),(userLogInDTO.getPassword()))
             );
+
+
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtGenerator.Gennerate(userLogInDTO.getEmail());
 
@@ -77,13 +90,15 @@ public class UserAuthController {
         return responseUtility.Get(redisService.LogoutService(token),HttpStatus.OK);
     }
 
+
+
+
     @PostMapping(UserApiConfigUrls.URL_ReseshToken)
     public  Object Refresh(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
-
-
         boolean valid = refreshTokenService.validateRefreshToken(tokenRefreshRequest.getEmail(), tokenRefreshRequest.getResfeshToken());
 
-        if (valid) {
+
+        if (!valid) {
             String newAccessToken = jwtGenerator.Gennerate(tokenRefreshRequest.getEmail());
             Map<String, String> tokens = new HashMap<>();
             tokens.put("NewAccessToken", newAccessToken);

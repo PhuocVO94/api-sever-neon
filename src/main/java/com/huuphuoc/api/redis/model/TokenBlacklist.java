@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash("_redishash")
+@RedisHash("resfesh-token")
 @Builder
 public class TokenBlacklist {
 

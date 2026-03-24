@@ -2,16 +2,17 @@ spring:
   application:
     name: webBH
 
-
-
+  # Config Redis dùng xử lý access Token, refresh token
   data:
     redis:
-      host: "redis-17551.c238.us-central1-2.gce.cloud.redislabs.com"
+      host: redis-17551.c238.us-central1-2.gce.cloud.redislabs.com
       port: 17551
       username: default
       password: TJubwZNfixw8GSmOsHY6zLAxXGtM26da
-
-
+      # Tắt SSL đối với bản Free của Redis Labs
+      ssl:
+        enabled: false
+      timeout: 50000 # Tăng lên 5 giây để tránh đứt kết nối
 
   # Config JDBC
   datasource:
@@ -20,10 +21,11 @@ spring:
     password: npg_6bSNFG2QKdhZ
     driverClassName: org.postgresql.Driver
 
-  #    Config JPA
+  # Config JPA
   jpa:
     database: POSTGRESQL
-    hibernate.ddl-auto:  create-drop
+    hibernate:
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -32,30 +34,27 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
 
+  # Config Mail (Đã đưa ra ngoài ngang hàng với jpa, datasource)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: vohuuphuoc1102@gmail.com
+    password: pphj mujp djgn jdre
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
-
-  # Config Swagger
-  springdoc:
-    swagger-ui:
-      parth: /webanhang.html
-      operation-sorter: method
-
-    mail:
-      host: smtp.gmail.com
-      port: 587
-      username: vohuuphuoc1102@gmail.com  # Thay email của bạn vào đây
-      password: wmxs eoix mnyd kqfz   # Thay App Password 16 ký tự vào đây
-      protocol: smtp
-      default-encoding: UTF-8
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
-              required: true
-            connectiontimeout: 5000 # (Tùy chọn) Timeout sau 5s nếu mạng lag
-            timeout: 5000
-            writetimeout: 5000
-
-
+# Config Swagger (Đưa hẳn ra ngoài cùng, không thuộc spring)
+springdoc:
+  swagger-ui:
+    path: /webanhang.html  # Đã sửa lỗi chính tả parth -> path
+    operationsSorter: method

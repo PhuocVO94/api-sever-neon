@@ -19,7 +19,7 @@ public class ConfirmTokenForUserService {
 
     private  final TokenRepository tokenRepository;
     private  final IUserRepository iUserRepository;
-    private  final IProfileRepository iProfileRepository;
+
     public Boolean HandlerConfirmTokenForUser(String token){
         ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
         if (confirmationToken == null){
@@ -40,7 +40,7 @@ public class ConfirmTokenForUserService {
 
 
         if (user.isBlock() == true) {
-            throw  new IllegalStateException("Tài khoản đã được ACTIVE trước đó");
+            throw  new IllegalStateException("Tài khoản đã được Bị Khóa  trước đó");
         }
         if (user.getStatus() == Status.ACTIVE){
             throw new IllegalStateException("Trạng thái người dùng đã được ACTIVE");

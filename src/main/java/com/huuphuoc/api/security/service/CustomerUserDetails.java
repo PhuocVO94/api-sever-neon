@@ -41,12 +41,12 @@ public class CustomerUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return user.isBlock();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isBlock();
     }
 
     @Override

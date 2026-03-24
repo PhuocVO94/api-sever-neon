@@ -13,6 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class RefreshTokenService {
+
+//    Tạo Ra resfesh Token =
     private  final StringRedisTemplate redisTemplate;
     private final long REFRESH_TOKEN_EXPIRY = 7 * 24 * 60 * 60;
     public String createRefreshToken(Authentication authentication){
@@ -23,7 +25,6 @@ public class RefreshTokenService {
 
         return refreshTokentemp;
     }
-
 
 
 

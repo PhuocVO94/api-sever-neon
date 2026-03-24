@@ -62,6 +62,7 @@ public class SecurityConfig {
 
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/Register").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/confirm", "/api/auth/confirm/**","/api/auth/resfesh").permitAll()
                         .requestMatchers("/api/users/**").authenticated()
