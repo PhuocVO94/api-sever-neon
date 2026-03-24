@@ -39,7 +39,6 @@ public class UserAuthController {
     private final JWTGenerator jwtGenerator;
     private  final RedisService redisService;
     private  final RefreshTokenService refreshTokenService;
-    private final PasswordEndcoder passwordEndcoder;
 
 
 
@@ -54,12 +53,6 @@ public class UserAuthController {
 
     @PostMapping(UserApiConfigUrls.URL_Login)
     public Object Login(@RequestBody UserLogInDTO userLogInDTO) {
-        System.out.println("Check Pass word " + passwordEndcoder.bCryptPasswordEncoder().encode(userLogInDTO.getPassword()));
-
-
-
-
-
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(),(userLogInDTO.getPassword()))
@@ -69,8 +62,6 @@ public class UserAuthController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtGenerator.Gennerate(userLogInDTO.getEmail());
-
-
             String resfeshToken =  refreshTokenService.createRefreshToken(authentication);
 
 
@@ -97,8 +88,7 @@ public class UserAuthController {
     public  Object Refresh(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
         boolean valid = refreshTokenService.validateRefreshToken(tokenRefreshRequest.getEmail(), tokenRefreshRequest.getResfeshToken());
 
-
-        if (!valid) {
+        if (valid) {
             String newAccessToken = jwtGenerator.Gennerate(tokenRefreshRequest.getEmail());
             Map<String, String> tokens = new HashMap<>();
             tokens.put("NewAccessToken", newAccessToken);

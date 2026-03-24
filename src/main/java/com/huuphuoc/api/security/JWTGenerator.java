@@ -31,7 +31,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class JWTGenerator {
 
-
 //    Hàm tạo token
 
     public  String Gennerate(String email){
@@ -105,6 +104,7 @@ public class JWTGenerator {
                 .jwtID(signedJWT.getJWTClaimsSet().getJWTID())
                 .issuedAt(signedJWT.getJWTClaimsSet().getIssueTime())
                 .expireTime(signedJWT.getJWTClaimsSet().getExpirationTime())
+                .email(signedJWT.getJWTClaimsSet().getSubject())
                 .build();
 
     }

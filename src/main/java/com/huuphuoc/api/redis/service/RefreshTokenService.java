@@ -22,10 +22,8 @@ public class RefreshTokenService {
         String refeshToken =  UUID.randomUUID().toString();
         redisTemplate.opsForValue().set(key,refeshToken, Duration.ofSeconds(REFRESH_TOKEN_EXPIRY));
         String refreshTokentemp = redisTemplate.opsForValue().get(key);
-
         return refreshTokentemp;
     }
-
 
 
 

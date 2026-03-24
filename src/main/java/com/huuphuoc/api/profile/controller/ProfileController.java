@@ -31,7 +31,7 @@ public class ProfileController {
 
         User userRfe = new User();
         userRfe.setId(user.getId());
-//        System.out.println("Profile Update" + userRfe.getId());
+//
         return responseEntity.Get(profileServiceImpl.saveProfile(userRfe,profileDTO), HttpStatus.OK);
 
     }

@@ -16,6 +16,7 @@ public class JWTinfor {
     String jwtID;
     Date issuedAt;
     Date expireTime;
+    String email; 
 
 
 }
