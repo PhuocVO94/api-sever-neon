@@ -1,6 +1,7 @@
 package com.huuphuoc.api.user.controller;
 
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.model.ResponseDTO;
 import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
 import com.huuphuoc.api.common.utils.ResponseUtility;
 import com.huuphuoc.api.redis.service.RedisService;
@@ -16,6 +17,7 @@ import com.huuphuoc.api.user.utils.UserApiConfigUrls;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -97,6 +99,13 @@ public class UserAuthController {
 
         }
         return responseUtility.Get("HttpStatus.UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+    }
+
+    @PutMapping("/reset-password/{email}")
+    public ResponseEntity<?> resetPassword(@PathVariable("email") @Valid String email){
+
+
+        return responseUtility.Get(userAuthSeviceImp.ResetPassword(email),HttpStatus.OK);
     }
 
 }

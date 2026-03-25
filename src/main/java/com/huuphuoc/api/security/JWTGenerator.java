@@ -53,11 +53,9 @@ public class JWTGenerator {
         } catch (JOSEException e) {
             throw new RuntimeException("Lỗi khi ký token: " + e.getMessage());
         }
-
-
     }
 
-//    Hàm giải mã token
+//    Hàm lấy thông tin TOKEN
 
     public String getUsernameFromJWT(String token) {
         try {

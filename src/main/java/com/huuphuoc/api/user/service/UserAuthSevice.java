@@ -5,5 +5,6 @@ import com.huuphuoc.api.user.dto.UserLogInDTO;
 
 public interface UserAuthSevice {
    UserBodyDTO RegistrationRequest(UserBodyDTO userBodyDTO);
+   Object ResetPassword(String email);
 
 }

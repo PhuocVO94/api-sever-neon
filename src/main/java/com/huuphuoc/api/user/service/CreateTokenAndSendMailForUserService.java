@@ -19,12 +19,9 @@ public class CreateTokenAndSendMailForUserService {
 
 
     public void  CreateTokenForUser(User user){
-
         if (user  == null){
             throw new IllegalStateException(user.getEmail() +" Chưa được tạo");
         }
-
-
 //       Tạo Token
         String uuid_for_token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(uuid_for_token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);

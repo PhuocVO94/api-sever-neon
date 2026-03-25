@@ -1,6 +1,7 @@
 package com.huuphuoc.api.security.config;
 
 import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.redis.repository.RedisRepository;
 import com.huuphuoc.api.security.JWTAuthEntryPoint;
 import com.huuphuoc.api.security.JWTAuthFilter;
 import com.huuphuoc.api.security.JWTGenerator;
@@ -9,6 +10,7 @@ import com.huuphuoc.api.security.utils.JWTencodeConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +34,8 @@ public class SecurityConfig {
     private  final JWTAuthEntryPoint jwtAuthEntryPoint;
     private  final JWTGenerator jwtGenerator;
     private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
-    private  final JWTencodeConfig jwTencodeConfig;
+    private  final RedisRepository redisRepository;
+
 
 
     @Bean
@@ -93,7 +96,7 @@ public class SecurityConfig {
 
     @Bean
     public JWTAuthFilter jwtAuthFilter() {
-        return new JWTAuthFilter(jwtGenerator, customerDetailsServiceImpl);
+        return new JWTAuthFilter(jwtGenerator, customerDetailsServiceImpl, redisRepository);
     }
 
 }

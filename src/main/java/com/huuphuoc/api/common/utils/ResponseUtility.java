@@ -22,12 +22,7 @@ public class ResponseUtility {
     }
 
 
-    /*Dùng lớp ResponseDTO  Dùng Để nhận giá trị
-     * trả về từ Sever
-     *
-     *
-     *
-     *  */
+
 
     public ResponseEntity<ResponseDTO> Get(Object result, HttpStatus status) {
         return new org.springframework.http.ResponseEntity<>(

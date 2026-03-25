@@ -34,11 +34,31 @@ public class EmailServiceImpl implements EmailService{
             logger.info("Đã gửi mail xác nhận thành công tới: " + to);
 
         } catch (MessagingException e) {
-            logger.error("Gửi mail thất bại tới: " + to, e);
+
             throw new IllegalStateException("Không thể gửi email, vui lòng thử lại sau.");
         } catch (NullPointerException nullPointerException) {
             throw new NullPointerException("Đang lỗi chỗ này chàng bộ nhớ" + nullPointerException);
         }
 
     }
+
+    @Override
+    public void resetPassword(String to, String emailContent) {
+       try {
+           MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+           MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+           helper.setText("Mât  khẩu mới của bạn là: " + emailContent);
+           helper.setTo(to);
+           helper.setSubject("Reset Password");
+           helper.setFrom("vohuuphuoc1102@gmail.com");
+           javaMailSender.send(mimeMessage);
+
+       } catch (MessagingException e){
+           throw new IllegalStateException("Không thể gửi email, vui lòng thử lại sau.");
+
+       } catch (NullPointerException nullPointerException) {
+           throw new NullPointerException("Đang lỗi chỗ này chàng bộ nhớ" + nullPointerException);
+       }
+    }
+
 }
