@@ -2,6 +2,7 @@ package com.huuphuoc.api.profile.controller;
 
 
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.model.ResponseDTO;
 import com.huuphuoc.api.common.utils.ResponseUtility;
 import com.huuphuoc.api.profile.model.ProfileDTO;
 import com.huuphuoc.api.profile.service.ProfileServiceImpl;
@@ -11,9 +12,12 @@ import com.huuphuoc.api.user.model.User;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApiConfigUrls.URL_USER)
@@ -35,6 +39,13 @@ public class ProfileController {
         User userRfe = new User();
         userRfe.setId(user.getId());
         return responseEntity.Get(profileServiceImpl.saveProfile(userRfe,profileDTO), HttpStatus.OK);
+
+    }
+    @GetMapping(ProfileEntity.PROFILE_GET_TABLE)
+    public ResponseEntity<ResponseDTO> getProfile(@AuthenticationPrincipal CustomerUserDetails customerUserDetails){
+            UUID userId = customerUserDetails.getUser().getId();
+           return  responseEntity.Get(profileServiceImpl.getProfile(userId),HttpStatus.OK);
+
 
     }
 

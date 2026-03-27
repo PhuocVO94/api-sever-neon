@@ -30,4 +30,5 @@ public class ProfileDTO {
     private Date birthDay;
     private String avatar;
 
+
 }

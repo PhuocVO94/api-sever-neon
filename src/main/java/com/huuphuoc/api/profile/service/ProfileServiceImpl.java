@@ -48,8 +48,6 @@ public class ProfileServiceImpl  implements ProfileService {
             profile.setUser(userR);
         }
 
-
-
         profile.setFullName(profileDTO.getFullName());
         profile.setGender(profileDTO.getGender());
         profile.setBirthday(profileDTO.getBirthDay());
@@ -60,6 +58,20 @@ public class ProfileServiceImpl  implements ProfileService {
     }
 
 
+    @Override
+    public ProfileDTO getProfile(UUID userid) {
+
+        Profile profile = iprofileRepository.findById(userid).orElseThrow(() ->
+                new RuntimeException("Không tìm thấy thông tin Profile cho User"));
+
+        ProfileDTO profileDTO =  new ProfileDTO();
+            profileDTO.setFullName(profile.getFullName());
+            profileDTO.setPhone(profile.getPhone());
+            profileDTO.setBirthDay(profile.getBirthday());
+            profileDTO.setGender(profile.getGender());
+            profileDTO.setAvatar(profile.getAvatar());
+        return profileDTO;
+    }
 
 
 }

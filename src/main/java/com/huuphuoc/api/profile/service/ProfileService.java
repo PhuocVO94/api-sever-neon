@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface ProfileService  {
 
     ProfileDTO saveProfile(User user, ProfileDTO profileDTO);
+    ProfileDTO getProfile(UUID userID);
 
 }
