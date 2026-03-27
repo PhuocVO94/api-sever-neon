@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.huuphuoc.api.common.utils.DateTimeFomat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +25,7 @@ import java.util.UUID;
 @SuperBuilder /* Dùng để cho các lớp con sử dụng Builder pattern */
 @MappedSuperclass /* Dùng để các lớp con kế thừa các cột này vào DB của chính nó */
 // SỬA 1: Dùng AuditingEntityListener để tự động điền ngày giờ, KHÔNG dùng AutoCloseable
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 

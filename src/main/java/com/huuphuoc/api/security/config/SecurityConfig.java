@@ -61,9 +61,10 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**"
-                        ).permitAll() // Mở full quyền cho Swagger
+                        ).permitAll() // Mở full quyền cho Swagger[
 
                         // Public endpoints
+                        .requestMatchers("/api/upload", "/api/upload/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/auth/Register").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()

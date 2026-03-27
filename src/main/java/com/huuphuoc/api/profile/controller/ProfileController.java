@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(ApiConfigUrls.URL_USER)
@@ -25,13 +26,14 @@ public class ProfileController {
 
 
     @PostMapping(ProfileEntity.PROFILE_TABLE)
-    public  Object upDateMyProfile(@AuthenticationPrincipal CustomerUserDetails curentUserDetails, @RequestBody ProfileDTO profileDTO){
+    public  Object upDateMyProfile(
+            @AuthenticationPrincipal CustomerUserDetails curentUserDetails,
+            @RequestBody ProfileDTO profileDTO){
 
         User user =  curentUserDetails.getUser();
 
         User userRfe = new User();
         userRfe.setId(user.getId());
-//
         return responseEntity.Get(profileServiceImpl.saveProfile(userRfe,profileDTO), HttpStatus.OK);
 
     }

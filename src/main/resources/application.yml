@@ -2,6 +2,14 @@ spring:
   application:
     name: webBH
 
+
+  cloudinary:
+    cloud-name: cloud-api-image
+    api-key: 846117431233626
+    api-secret: -4UFFqdjk35oW75gA0IJJcdgxJk
+
+
+
   # Config Redis dùng xử lý access Token, refresh token
   data:
     redis:
@@ -52,6 +60,8 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
+
+
 
 # Config Swagger (Đưa hẳn ra ngoài cùng, không thuộc spring)
 springdoc:

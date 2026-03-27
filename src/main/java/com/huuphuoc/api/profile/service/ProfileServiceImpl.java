@@ -1,5 +1,6 @@
 package com.huuphuoc.api.profile.service;
 
+import com.huuphuoc.api.common.enums.Gender;
 import com.huuphuoc.api.config.ModelMapperConfig;
 import com.huuphuoc.api.profile.model.Profile;
 import com.huuphuoc.api.profile.model.ProfileDTO;
@@ -12,13 +13,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 
-public class ProfileServiceImpl  implements ProfileService{
+public class ProfileServiceImpl  implements ProfileService {
 
 
     IProfileRepository iprofileRepository;
@@ -31,37 +33,34 @@ public class ProfileServiceImpl  implements ProfileService{
         this.modelMapperConfig = modelMapperConfig;
     }
 
-    @Override
-    public List<ProfileDTO> findAll() {
-        return List.of();
-    }
 
     @Override
-    public ProfileDTO saveProfile( User user, ProfileDTO profileDTO) {
-
+    public ProfileDTO saveProfile(User user, ProfileDTO profileDTO) {
         User userR = iUserRepository.getReferenceById(user.getId());
-        Profile profile = new Profile();
+        Date currDate = new Date();
+        if (profileDTO.getBirthDay().after(currDate)) {
+            throw new RuntimeException("Năm sinh bị sai");
+        }
+
+        Profile profile = iprofileRepository.findByUserId(user.getId())
+                .orElseGet(() -> new Profile());
+        if (profile.getUser() == null) {
+            profile.setUser(userR);
+        }
+
+
+
         profile.setFullName(profileDTO.getFullName());
+        profile.setGender(profileDTO.getGender());
+        profile.setBirthday(profileDTO.getBirthDay());
         profile.setPhone(profileDTO.getPhone());
-        profile.setAddress(profileDTO.getAvatar());
         profile.setAvatar(profileDTO.getAvatar());
-        profile.setUser(userR);
-        System.out.println("Check Profile trong Save Profile" + profile.getUser().getId());
         iprofileRepository.save(profile);
         return profileDTO;
     }
 
-    @Override
-    public ProfileDTO findById(UUID id) {
-        Optional <Profile> profiles = iprofileRepository.findById(id);
 
-        if (profiles.isEmpty()){
-            throw  new IllegalStateException("Không tìm thấy profile");
-        }
 
-        System.out.println("Luồng đang đúng");
 
-        return null;
-    }
 }
 

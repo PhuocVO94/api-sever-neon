@@ -9,7 +9,7 @@ import java.util.UUID;
 
 
 public interface ProfileService  {
-    List<ProfileDTO> findAll();
+
     ProfileDTO saveProfile(User user, ProfileDTO profileDTO);
-    ProfileDTO findById(UUID id);
+
 }
