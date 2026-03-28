@@ -1,10 +1,9 @@
 package com.huuphuoc.api.user.service;
 import com.huuphuoc.api.common.enums.Roles;
 import com.huuphuoc.api.common.enums.Status;
-import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.common.utils.EmailValidator;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
-import com.huuphuoc.api.user.dto.UserLogInDTO;
 import com.huuphuoc.api.user.email.service.EmailServiceImpl;
 import com.huuphuoc.api.user.model.User;
 import com.huuphuoc.api.user.repository.IUserRepository;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserAuthSeviceImp implements UserAuthSevice {
-    private final PasswordEndcoder passwordEndcoder;
+    private final PasswordEncoder passwordEncoder;
     private  final IUserRepository iUserRepository;
     private  final EmailValidator emailValidator;
     private  final EmailServiceImpl emailService;
@@ -39,7 +38,7 @@ public class UserAuthSeviceImp implements UserAuthSevice {
         User user = new User();
         user.setUsername(userBodyDTO.getUsername());
         user.setEmail(userBodyDTO.getEmail());
-        user.setPassword(passwordEndcoder.bCryptPasswordEncoder().encode(userBodyDTO.getPassword()));
+        user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(userBodyDTO.getPassword()));
         user.setStatus(Status.UNVERIFIED);
         user.getRoles().add(Roles.USER);
         User userSave = iUserRepository.save(user);
@@ -65,7 +64,7 @@ public class UserAuthSeviceImp implements UserAuthSevice {
             }
 //            System.out.println("Check Email User: " + user.getUsername());
             String newPassWord  = "Mkmcbla123";
-            user.setPassword(passwordEndcoder.bCryptPasswordEncoder().encode(newPassWord));
+            user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(newPassWord));
             iUserRepository.save(user);
             emailService.resetPassword(email,newPassWord);
 

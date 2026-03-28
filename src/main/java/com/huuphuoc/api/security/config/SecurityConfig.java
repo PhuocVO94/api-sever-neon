@@ -1,16 +1,14 @@
 package com.huuphuoc.api.security.config;
 
-import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.redis.repository.RedisRepository;
 import com.huuphuoc.api.security.JWTAuthEntryPoint;
 import com.huuphuoc.api.security.JWTAuthFilter;
 import com.huuphuoc.api.security.JWTGenerator;
 import com.huuphuoc.api.security.service.CustomerDetailsServiceImpl;
-import com.huuphuoc.api.security.utils.JWTencodeConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final PasswordEndcoder passwordEndcoder;
+    private final PasswordEncoder passwordEncoder;
     private  final JWTAuthEntryPoint jwtAuthEntryPoint;
     private  final JWTGenerator jwtGenerator;
     private  final  CustomerDetailsServiceImpl customerDetailsServiceImpl;
@@ -85,7 +83,7 @@ public class SecurityConfig {
 
         // Nạp UserDetailsService vào đây để Spring biết cách tìm user
         authProvider.setUserDetailsService(customerDetailsServiceImpl);
-        authProvider.setPasswordEncoder(passwordEndcoder.bCryptPasswordEncoder());
+        authProvider.setPasswordEncoder(passwordEncoder.bCryptPasswordEncoder());
 
         return authProvider;
     }

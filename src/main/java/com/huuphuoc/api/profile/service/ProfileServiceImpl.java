@@ -1,21 +1,16 @@
 package com.huuphuoc.api.profile.service;
 
-import com.huuphuoc.api.common.enums.Gender;
+import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.config.ModelMapperConfig;
+import com.huuphuoc.api.profile.model.ChangePassDTO;
 import com.huuphuoc.api.profile.model.Profile;
 import com.huuphuoc.api.profile.model.ProfileDTO;
 import com.huuphuoc.api.profile.repository.IProfileRepository;
 import com.huuphuoc.api.user.model.User;
 import com.huuphuoc.api.user.repository.IUserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,11 +21,14 @@ public class ProfileServiceImpl  implements ProfileService {
     IProfileRepository iprofileRepository;
     IUserRepository iUserRepository;
     ModelMapperConfig modelMapperConfig;
+    PasswordEncoder passwordEncoder;
 
-    public ProfileServiceImpl(IProfileRepository iprofileRepository, IUserRepository iUserRepository, ModelMapperConfig modelMapperConfig) {
+
+    public ProfileServiceImpl(IProfileRepository iprofileRepository, IUserRepository iUserRepository, ModelMapperConfig modelMapperConfig, PasswordEncoder passwordEncoder) {
         this.iprofileRepository = iprofileRepository;
         this.iUserRepository = iUserRepository;
         this.modelMapperConfig = modelMapperConfig;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -71,6 +69,35 @@ public class ProfileServiceImpl  implements ProfileService {
             profileDTO.setGender(profile.getGender());
             profileDTO.setAvatar(profile.getAvatar());
         return profileDTO;
+    }
+
+
+    @Override
+    public String changePassword(UUID userid, ChangePassDTO changePassDTO) {
+
+
+        User user = iUserRepository.findUserById(userid);
+        System.out.println("Check" + user.getEmail());
+        if (user == null) {
+            throw  new RuntimeException("Tài khoản k tồn tại!");
+        }
+
+
+        String bcyptOldPassWord = user.getPassword();
+        Boolean result = passwordEncoder.bCryptPasswordEncoder().matches(changePassDTO.getOldPassword(),bcyptOldPassWord);
+        if (!result) {
+            throw  new RuntimeException("Mật  hiện tại không đúng");
+        }
+
+        if (!changePassDTO.getNewPassword().equals(changePassDTO.getConfirmPassword())) {
+            throw  new RuntimeException("Mật khẩu mới không đúng");
+        }
+        String bcyptNewPassWord =  passwordEncoder.bCryptPasswordEncoder().encode(changePassDTO.getNewPassword());
+
+        user.setPassword(bcyptNewPassWord);
+        iUserRepository.save(user);
+
+        return "Đổi mật khẩu thành công: " + user.getUsername();
     }
 
 

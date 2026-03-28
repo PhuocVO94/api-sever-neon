@@ -2,7 +2,7 @@ package com.huuphuoc.api.config;
 
 import com.huuphuoc.api.common.enums.Roles;
 import com.huuphuoc.api.common.enums.Status;
-import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
+import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.user.model.User;
 import com.huuphuoc.api.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
     private final IUserRepository userRepository;
-    private  final PasswordEndcoder passwordEndcoder;
+    private  final PasswordEncoder passwordEncoder;
 
 
 
@@ -33,7 +33,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             User admin = new User();
             admin.setEmail(adminEmail);
             admin.setUsername("admin");
-            admin.setPassword(passwordEndcoder.bCryptPasswordEncoder().encode("123456789"));
+            admin.setPassword(passwordEncoder.bCryptPasswordEncoder().encode("123456789"));
             admin.setRoles(roles);
             admin.setStatus(Status.ACTIVE);
             admin.setBlock(true);

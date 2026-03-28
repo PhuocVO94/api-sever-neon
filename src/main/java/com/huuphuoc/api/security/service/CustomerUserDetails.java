@@ -1,11 +1,9 @@
 package com.huuphuoc.api.security.service;
 
 import com.huuphuoc.api.common.enums.Status;
-import com.huuphuoc.api.common.passwordencoder.PasswordEndcoder;
 import com.huuphuoc.api.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -4,6 +4,7 @@ package com.huuphuoc.api.profile.controller;
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
 import com.huuphuoc.api.common.model.ResponseDTO;
 import com.huuphuoc.api.common.utils.ResponseUtility;
+import com.huuphuoc.api.profile.model.ChangePassDTO;
 import com.huuphuoc.api.profile.model.ProfileDTO;
 import com.huuphuoc.api.profile.service.ProfileServiceImpl;
 import com.huuphuoc.api.profile.unit.ProfileEntity;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -47,6 +47,12 @@ public class ProfileController {
            return  responseEntity.Get(profileServiceImpl.getProfile(userId),HttpStatus.OK);
 
 
+    }
+    @PutMapping(ProfileEntity.PROFILE_CHANCE_PASSWORD)
+    public ResponseEntity<ResponseDTO> changePassword(@AuthenticationPrincipal CustomerUserDetails customerUserDetails, @RequestBody ChangePassDTO changePassDTO) {
+
+        UUID userID = customerUserDetails.getUser().getId();
+        return  responseEntity.Get(profileServiceImpl.changePassword(userID, changePassDTO), HttpStatus.OK);
     }
 
 }

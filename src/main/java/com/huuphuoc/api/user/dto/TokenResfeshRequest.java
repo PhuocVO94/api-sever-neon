@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenRefreshRequest {
+public class TokenResfeshRequest {
     private String email;
     private  String resfeshToken;
 }
