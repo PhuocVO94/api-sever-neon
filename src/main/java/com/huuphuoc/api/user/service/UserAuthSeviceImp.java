@@ -2,6 +2,7 @@ package com.huuphuoc.api.user.service;
 import com.huuphuoc.api.common.enums.Roles;
 import com.huuphuoc.api.common.enums.Status;
 import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
+import com.huuphuoc.api.common.utils.DateTimeFomat;
 import com.huuphuoc.api.common.utils.EmailValidator;
 import com.huuphuoc.api.user.dto.UserBodyDTO;
 import com.huuphuoc.api.user.email.service.EmailServiceImpl;
@@ -10,6 +11,7 @@ import com.huuphuoc.api.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,7 @@ public class UserAuthSeviceImp implements UserAuthSevice {
     private  final EmailValidator emailValidator;
     private  final EmailServiceImpl emailService;
     private final CreateTokenAndSendMailForUserService createTokenAndSendMailForUserService;
+
 
 
 
@@ -65,6 +68,8 @@ public class UserAuthSeviceImp implements UserAuthSevice {
 //            System.out.println("Check Email User: " + user.getUsername());
             String newPassWord  = "Mkmcbla123";
             user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(newPassWord));
+            LocalDateTime localDateTime = LocalDateTime.now();
+            user.setLastModifiedAt(localDateTime);
             iUserRepository.save(user);
             emailService.resetPassword(email,newPassWord);
 

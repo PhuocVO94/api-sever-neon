@@ -49,7 +49,7 @@ public class User extends BaseEntity {
     )
 
     @Enumerated(EnumType.STRING)
-    @Column(name = UserEntity.user.COLUNM_ROLES) // Tên cột trong bảng phụ
+    @Column(name = UserEntity.user.COLUNM_ROLES)
     private Set<Roles> roles = new HashSet<>(Collections.singleton(Roles.USER));
 
 
