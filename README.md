@@ -3,7 +3,7 @@
 
 ### 1. Domain Authentication & User Profile 
 ### 2. Domain Product Catalog
-![ERD Database Auth vs Database Product](./images/API-Service-Neon (1).png")
+![ERD Database Auth vs Database Product](./images/API-Service-Neon (1).png)
 
 
 
