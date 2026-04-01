@@ -1,4 +1,11 @@
 
+## 🗄️ Database Architecture
+
+### 1. Domain Authentication & User Profile 
+### 2. Domain Product Catalog
+![ERD Database Auth vs Database Product](./images/API-Service-Neon (1).png")
+
+
 
 🚀 E-Commerce API (Spring Boot)
 An E-commerce API system built for learning purposes, implementing the latest technologies in the Java Spring ecosystem. This project focuses on high security, automated development workflows (CI/CD), and scalability.
