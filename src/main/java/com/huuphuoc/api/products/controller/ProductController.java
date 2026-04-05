@@ -50,6 +50,6 @@ public class ProductController {
 
     @PutMapping("update")
     public Object update(@RequestBody ProductDTOForUpdate productDTOForUpdate) {
-        return responseEntity.Get(productService.updateProduct(productDTOForUpdate), HttpStatus.OK);
+        return responseEntity.Get("", HttpStatus.OK);
     }
 }

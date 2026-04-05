@@ -1,39 +1,60 @@
 package com.huuphuoc.api.common.exception;
 
 
-import com.huuphuoc.api.common.model.ResponseDTO;
+
+
+import com.huuphuoc.api.common.model.ResponEntity;
 import com.huuphuoc.api.common.utils.ResponseUtility;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.boot.context.config.ConfigDataNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDate;
+
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private final ResponseUtility responseUtility;
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ResponEntity> handleGlobalExtoption(Exception ex) {
 
-    @Autowired
-    public GlobalExceptionHandler(ResponseUtility responseUtility) {
-        this.responseUtility = responseUtility;
+        return new ResponseEntity<>(ResponEntity.builder()
+                .content(ex.getMessage())
+                .localDate(LocalDate.now())
+                .hasError(true)
+                .build(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /* ACheck Lỗi Check lỗi runthimeException các giá trị các giá trị*/
-    @ExceptionHandler(GlobalRuntimeException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseDTO> handlerHttpMessageNotReadableException(GlobalRuntimeException ex) {
-        return responseUtility.Error(ex, HttpStatus.BAD_REQUEST);
 
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<ResponEntity> handleGlobalDataNotFundException(DataNotFoundException dataNotFoundException){
+
+        return new ResponseEntity<>(ResponEntity.builder()
+                .content(dataNotFoundException.getMessage())
+                .hasError(true)
+                .localDate(LocalDate.now())
+                .build(),HttpStatus.NOT_FOUND);
     }
 
-    /* ACheck Lỗi validate các giá trị*/
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseDTO> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return responseUtility.ErrorMethodArgumentNotValidException(ex, HttpStatus.BAD_REQUEST);
+
+    @ExceptionHandler(AppExeption.class)
+    public ResponseEntity<ResponEntity> handlerGlobalAppExeption(AppExeption appExeption){
+    HttpStatus httpStatus = appExeption.getHttpStatus();
+        return new ResponseEntity<>(ResponEntity.builder()
+                .content(appExeption.getMessage())
+                .hasError(true)
+                .localDate(LocalDate.now())
+                .build(), httpStatus);
     }
+
+
+
 
 }

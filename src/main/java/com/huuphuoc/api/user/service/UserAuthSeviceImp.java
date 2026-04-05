@@ -1,6 +1,7 @@
 package com.huuphuoc.api.user.service;
 import com.huuphuoc.api.common.enums.Roles;
 import com.huuphuoc.api.common.enums.Status;
+import com.huuphuoc.api.common.exception.AppExeption;
 import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.common.utils.DateTimeFomat;
 import com.huuphuoc.api.common.utils.EmailValidator;
@@ -9,6 +10,7 @@ import com.huuphuoc.api.user.email.service.EmailServiceImpl;
 import com.huuphuoc.api.user.model.User;
 import com.huuphuoc.api.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -52,34 +54,17 @@ public class UserAuthSeviceImp implements UserAuthSevice {
     @Override
     public Object ResetPassword(String email) {
 
-        try {
-            if (!emailValidator.test(email)) {
-                throw  new IllegalStateException("Email không đúng định dạng: " + email);
-
-            }
             User user = iUserRepository.findUserByEmail(email);
             if (user == null){
-                throw  new RuntimeException("Tài khoản k tồn tại");
+                throw new AppExeption("Không tìm thấy địa chỉ email", HttpStatus.BAD_REQUEST);
             }
 
-            if (!user.isBlock()) {
-                    throw  new RuntimeException( "Tài khoản đã khóa cần liên hệ chủ phần mềm");
-            }
-//            System.out.println("Check Email User: " + user.getUsername());
             String newPassWord  = "Mkmcbla123";
             user.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(newPassWord));
             LocalDateTime localDateTime = LocalDateTime.now();
             user.setLastModifiedAt(localDateTime);
             iUserRepository.save(user);
             emailService.resetPassword(email,newPassWord);
-
-        }catch (NullPointerException e) {
-            throw  new NullPointerException("K" + e.getMessage());
-
-        }
-
-
-
 
 
         return  "Mk đã được gửi tới Email của bạn!!!";

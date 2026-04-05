@@ -1,5 +1,6 @@
 package com.huuphuoc.api.profile.service;
 
+import com.huuphuoc.api.common.exception.AppExeption;
 import com.huuphuoc.api.common.passwordencoder.PasswordEncoder;
 import com.huuphuoc.api.config.ModelMapperConfig;
 import com.huuphuoc.api.profile.model.ChangePassDTO;
@@ -8,6 +9,7 @@ import com.huuphuoc.api.profile.model.ProfileDTO;
 import com.huuphuoc.api.profile.repository.IProfileRepository;
 import com.huuphuoc.api.user.model.User;
 import com.huuphuoc.api.user.repository.IUserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -37,7 +39,7 @@ public class ProfileServiceImpl  implements ProfileService {
         User userR = iUserRepository.getReferenceById(user.getId());
         Date currDate = new Date();
         if (profileDTO.getBirthDay().after(currDate)) {
-            throw new RuntimeException("Năm sinh bị sai");
+            throw new AppExeption("Ngày tháng năm sinh sai", HttpStatus.NOT_FOUND);
         }
 
         Profile profile = iprofileRepository.findByUserId(user.getId())
@@ -60,7 +62,7 @@ public class ProfileServiceImpl  implements ProfileService {
     public ProfileDTO getProfile(UUID userid) {
 
         Profile profile = iprofileRepository.findById(userid).orElseThrow(() ->
-                new RuntimeException("Không tìm thấy thông tin Profile cho User"));
+                new AppExeption("Chưa cập nhập thông tin người dùng",HttpStatus.NOT_FOUND));
 
         ProfileDTO profileDTO =  new ProfileDTO();
             profileDTO.setFullName(profile.getFullName());
@@ -77,20 +79,16 @@ public class ProfileServiceImpl  implements ProfileService {
 
 
         User user = iUserRepository.findUserById(userid);
-        System.out.println("Check" + user.getEmail());
-        if (user == null) {
-            throw  new RuntimeException("Tài khoản k tồn tại!");
-        }
 
 
         String bcyptOldPassWord = user.getPassword();
         Boolean result = passwordEncoder.bCryptPasswordEncoder().matches(changePassDTO.getOldPassword(),bcyptOldPassWord);
         if (!result) {
-            throw  new RuntimeException("Mật  hiện tại không đúng");
+                throw new AppExeption("Mật khẩu cũ không chính xác",HttpStatus.BAD_REQUEST);
         }
 
         if (!changePassDTO.getNewPassword().equals(changePassDTO.getConfirmPassword())) {
-            throw  new RuntimeException("Mật khẩu mới không đúng");
+            throw  new AppExeption("Mật khẩu không chính xác", HttpStatus.BAD_REQUEST);
         }
         String bcyptNewPassWord =  passwordEncoder.bCryptPasswordEncoder().encode(changePassDTO.getNewPassword());
 

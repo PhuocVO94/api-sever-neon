@@ -1,6 +1,8 @@
 package com.huuphuoc.api.user.controller;
 
 import com.huuphuoc.api.common.Util.ApiConfigUrls;
+import com.huuphuoc.api.common.exception.DataNotFoundException;
+import com.huuphuoc.api.common.exception.GlobalExceptionHandler;
 import com.huuphuoc.api.common.utils.ResponseUtility;
 import com.huuphuoc.api.redis.service.RedisService;
 import com.huuphuoc.api.redis.service.RefreshTokenService;
@@ -44,39 +46,32 @@ public class UserAuthController {
 
 
     @PostMapping(UserApiConfigUrls.URL_Register)
-    public Object SavedRequest(@RequestBody @Valid UserBodyDTO userBodyDTO) {
+    public Object SavedRequest(@RequestBody @Valid UserBodyDTO userBodyDTO) throws DataNotFoundException, Exception {
         return responseUtility.Get(userAuthSeviceImp.RegistrationRequest(userBodyDTO), HttpStatus.OK);
     }
 
 
 
     @PostMapping(UserApiConfigUrls.URL_Login)
-    public Object Login(@RequestBody UserLogInDTO userLogInDTO) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(),(userLogInDTO.getPassword()))
-            );
+    public Object Login(@RequestBody UserLogInDTO userLogInDTO) throws DataNotFoundException, Exception {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLogInDTO.getEmail(),(userLogInDTO.getPassword()))
+        );
 
 
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String accessToken = jwtGenerator.Gennerate(userLogInDTO.getEmail());
-            String resfeshToken =  refreshTokenService.createRefreshToken(authentication);
-
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String accessToken = jwtGenerator.Gennerate(userLogInDTO.getEmail());
+        String resfeshToken =  refreshTokenService.createRefreshToken(authentication);
 
 
-            return responseUtility.Get(new JWTAuthDTO(accessToken, resfeshToken), HttpStatus.OK);
-        } catch (DisabledException ex) {
+        return responseUtility.Get(new JWTAuthDTO(accessToken, resfeshToken), HttpStatus.OK);
 
-            return responseUtility.Error(new IllegalStateException("Tài khoản chưa được kích hoạt. Vui lòng xác nhận email trước khi đăng nhập."), HttpStatus.FORBIDDEN);
-        } catch (BadCredentialsException ex) {
-            return responseUtility.Error(new IllegalStateException("Email hoặc mật khẩu không đúng."), HttpStatus.UNAUTHORIZED);
-        }
+
     }
 
 
     @PostMapping(UserApiConfigUrls.URL_Logout)
-    public Object Logout(@RequestHeader String token) throws ParseException {
+    public Object Logout(@RequestHeader String token) throws ParseException , Exception, DataNotFoundException{
         return responseUtility.Get(redisService.LogoutService(token),HttpStatus.OK);
     }
 
@@ -84,7 +79,7 @@ public class UserAuthController {
 
 
     @PostMapping(UserApiConfigUrls.URL_RefeshToken)
-    public  Object Refresh(@RequestBody TokenResfeshRequest tokenResfeshRequest) {
+    public  Object Refresh(@RequestBody TokenResfeshRequest tokenResfeshRequest)throws Exception, DataNotFoundException {
         boolean valid = refreshTokenService.validateRefreshToken(tokenResfeshRequest.getEmail(), tokenResfeshRequest.getResfeshToken());
 
         if (valid) {
@@ -99,9 +94,7 @@ public class UserAuthController {
     }
 
     @PutMapping("/reset-password/{email}")
-    public ResponseEntity<?> resetPassword(@PathVariable("email") @Valid String email){
-
-
+    public ResponseEntity<?> resetPassword(@PathVariable("email") @Valid String email) throws DataNotFoundException, Exception{
         return responseUtility.Get(userAuthSeviceImp.ResetPassword(email),HttpStatus.OK);
     }
 

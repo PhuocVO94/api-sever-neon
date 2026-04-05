@@ -2,7 +2,6 @@ package com.huuphuoc.api.products.service;
 
 
 import com.huuphuoc.api.config.ModelMapperConfig;
-import com.huuphuoc.api.common.exception.GlobalRuntimeException;
 import com.huuphuoc.api.products.dto.ProductDTO;
 import com.huuphuoc.api.products.dto.ProductDTOForUpdate;
 import com.huuphuoc.api.products.model.Product;
@@ -63,22 +62,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Product updateProduct(ProductDTOForUpdate productDTOForUpdate) {
+    public void updateProduct(ProductDTOForUpdate productDTOForUpdate) {
         Optional<Product> optionalProduct = productRepository.findById(productDTOForUpdate.getBase_UUID());
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
-//            System.out.println("Vo Huu Phuoc Designer");
+
             System.out.println(product);
 
             product.setName(productDTOForUpdate.getName());
             product.setDescription(productDTOForUpdate.getDescription());
             product.setImage(productDTOForUpdate.getImage());
             product.setPrice(productDTOForUpdate.getPrice());
-            // Lưu và trả về sản phẩm đã cập nhật
-            return productRepository.save(product);
-        } else {
 
-            throw new GlobalRuntimeException("Product not found");
+            productRepository.save(product);
         }
 
     }

@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface ProductService extends GenericService<Product, ProductDTO, UUID> {
 
-    Product updateProduct(ProductDTOForUpdate productDTOForUpdate);
+    void updateProduct(ProductDTOForUpdate productDTOForUpdate);
 }
