@@ -58,7 +58,6 @@ public class ProfileController {
             @AuthenticationPrincipal CustomerUserDetails customerUserDetails,
             @RequestBody ChangePassDTO changePassDTO) throws DataNotFoundException, Exception {
         UUID userID = customerUserDetails.getUser().getId();
-
         return  responseEntity.Get(profileServiceImpl.changePassword(userID, changePassDTO), HttpStatus.OK);
     }
 
